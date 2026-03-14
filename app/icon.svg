@@ -1,52 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#121212" />
-      <stop offset="100%" stop-color="#050505" />
+    <linearGradient id="main" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A"/>
+      <stop offset="50%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#EA580C"/>
     </linearGradient>
-
-    <!-- Logo Line Gradient (Neon Cyan to Blue) -->
-    <linearGradient id="neonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#14F195" />
-      <stop offset="50%" stop-color="#00E5FF" />
-      <stop offset="100%" stop-color="#2962FF" />
+    <linearGradient id="dim" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#92400E"/>
     </linearGradient>
-
-    <!-- Outer Glow Filter -->
-    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="15" result="blur" />
-      <feComposite in="SourceGraphic" in2="blur" operator="over" />
-    </filter>
   </defs>
 
-  <!-- Dark Rounded Square Background -->
-  <rect x="24" y="24" width="464" height="464" rx="100" fill="url(#bgGrad)" stroke="#1a1a1a" stroke-width="4"/>
+  <rect width="64" height="64" rx="13" fill="#111008"/>
+  <rect width="64" height="64" rx="13" fill="none" stroke="#F59E0B" stroke-width="0.6" stroke-opacity="0.18"/>
 
-  <!-- Logo Group -->
-  <g transform="translate(116, 126)" filter="url(#glow)">
-    
-    <!-- Letter 'V' (Left Side) -->
-    <path d="M 40 40 L 120 250 L 160 145" 
-          fill="none" 
-          stroke="url(#neonGrad)" 
-          stroke-width="36" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" />
+  <polygon points="9,12 18,12 32,40 26,40" fill="url(#main)"/>
+  <polygon points="46,12 38,12 32,40 38,40" fill="url(#dim)"/>
 
-    <!-- Letter 'P' (Right Side Interconnected) -->
-    <path d="M 120 250 L 120 40 L 240 40 Q 280 40 280 90 Q 280 145 240 145 L 120 145" 
-          fill="none" 
-          stroke="url(#neonGrad)" 
-          stroke-width="36" 
-          stroke-linecap="round" 
-          stroke-linejoin="round" />
+  <rect x="38" y="12" width="8" height="30" fill="url(#dim)"/>
 
-    <!-- Decorative Pipeline Nodes (Circles) -->
-    <circle cx="40" cy="40" r="18" fill="#14F195" />
-    <circle cx="120" cy="250" r="18" fill="#00E5FF" />
-    <circle cx="280" cy="90" r="18" fill="#2962FF" />
-    <circle cx="120" cy="40" r="18" fill="#14F195" />
+  <path d="M46,12 Q58,12 58,21 Q58,30 46,30 L46,12 Z" fill="url(#main)"/>
+  <path d="M46,17 Q53,17 53,21 Q53,25 46,25 L46,17 Z" fill="#111008"/>
 
-  </g>
+  <circle cx="32" cy="40" r="2" fill="#FDE68A" opacity="0.6"/>
 </svg>

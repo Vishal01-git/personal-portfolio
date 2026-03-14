@@ -4,36 +4,196 @@
 
 @layer base {
   :root {
-    --background: #0B0F14;
-    --surface: #121821;
-    
-    --primaryGlow: #00E5FF;
-    --secondaryGlow: #8A2BE2;
-    --accent: #14F195;
-    
-    --textPrimary: #E6EDF3;
-    --textSecondary: #9AA4B2;
+    /* ─── Backgrounds ──────────────────────────────────────────── */
+    --background: #111008;        /* deep scorched black */
+    --surface: #1C1810;           /* charcoal with warm undertone */
+    --surface-elevated: #251F14;  /* cards, modals, elevated panels */
+    --surface-subtle: #0E0C06;    /* inset areas, code blocks */
 
-    --pipelineGlow: #00E5FF;
-    --processingGlow: #8A2BE2;
-    --storageGlow: #14F195;
+    /* ─── Brand / Glow Colors ─────────────────────────────────── */
+    --primaryGlow: #F59E0B;       /* scorched amber — primary actions, highlights */
+    --secondaryGlow: #EA580C;     /* volcanic orange — secondary accents, hover states */
+    --accent: #FDE68A;            /* pale ember — subtle accents, active states */
 
-    --shadow-soft-glass: 0 4px 30px rgba(0, 0, 0, 0.1);
-    --shadow-neon-glow: 0 0 10px rgba(0, 229, 255, 0.5), 0 0 20px rgba(0, 229, 255, 0.3);
-    --shadow-elevation: 0 10px 40px rgba(0, 0, 0, 0.5);
+    /* ─── Pipeline / Data Visualization ──────────────────────── */
+    --pipelineGlow: #F59E0B;      /* ingestion / source nodes */
+    --processingGlow: #EA580C;    /* transform / processing nodes */
+    --storageGlow: #FDE68A;       /* storage / sink nodes */
+
+    /* ─── Contrast layers ─────────────────────────────────────── */
+    --contrastGlow: #92400E;      /* deep burnt orange — borders, inactive states */
+    --contrastSoft: #1C1208;      /* very muted — subtle dividers, bg tints */
+
+    /* ─── Text ────────────────────────────────────────────────── */
+    --textPrimary: #F5F0E8;       /* warm parchment — body text */
+    --textSecondary: #A89880;     /* aged paper — secondary labels */
+    --textTertiary: #5C4A30;      /* dark soot — hints, placeholders */
+    --textInverse: #111008;       /* for text on bright amber surfaces */
+
+    /* ─── Borders ─────────────────────────────────────────────── */
+    --borderSubtle: rgba(245, 158, 11, 0.08);    /* barely-there dividers */
+    --borderDefault: rgba(245, 158, 11, 0.2);    /* standard borders */
+    --borderStrong: rgba(245, 158, 11, 0.38);    /* hover / focus borders */
+    --borderActive: rgba(245, 158, 11, 0.65);    /* active / selected borders */
+
+    /* ─── Shadows ─────────────────────────────────────────────── */
+    --shadow-soft-glass: 0 4px 30px rgba(0, 0, 0, 0.3);
+    --shadow-neon-glow:  0 0 10px rgba(245, 158, 11, 0.55),
+                         0 0 28px rgba(245, 158, 11, 0.25),
+                         0 0 60px rgba(234, 88, 12, 0.12);
+    --shadow-neon-subtle: 0 0 6px rgba(245, 158, 11, 0.4),
+                          0 0 16px rgba(245, 158, 11, 0.15);
+    --shadow-elevation: 0 10px 40px rgba(0, 0, 0, 0.65);
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.45),
+                   inset 0 1px 0 rgba(245, 158, 11, 0.08);
+
+    /* ─── Status Colors (semantic) ────────────────────────────── */
+    --statusSuccess: #6EAF6E;
+    --statusWarning: #F59E0B;     /* shares primary intentionally */
+    --statusError: #EF4444;
+    --statusInfo: #6B9AC4;
   }
 
   body {
     background-color: var(--background);
     color: var(--textPrimary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar styled to match the ember theme */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--surface-subtle);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--contrastGlow);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--primaryGlow);
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background: rgba(245, 158, 11, 0.28);
+    color: var(--textPrimary);
   }
 }
 
 @layer utilities {
+  /* ─── Glass Panels ──────────────────────────────────────────── */
   .glass-panel {
-    background: rgba(18, 24, 33, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(230, 237, 243, 0.05);
+    background: rgba(28, 24, 16, 0.65);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--borderSubtle);
+  }
+
+  .glass-panel-bright {
+    background: rgba(37, 31, 20, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--borderDefault);
+  }
+
+  /* ─── Glow Utilities ────────────────────────────────────────── */
+  .glow-primary {
+    box-shadow: var(--shadow-neon-subtle);
+  }
+
+  .glow-primary-strong {
+    box-shadow: var(--shadow-neon-glow);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 12px rgba(245, 158, 11, 0.7),
+                 0 0 30px rgba(245, 158, 11, 0.3),
+                 0 0 60px rgba(234, 88, 12, 0.15);
+  }
+
+  .text-glow-subtle {
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
+  }
+
+  /* ─── Borders ───────────────────────────────────────────────── */
+  .border-ember {
+    border: 1px solid var(--borderDefault);
+  }
+
+  .border-ember-strong {
+    border: 1px solid var(--borderStrong);
+  }
+
+  /* ─── Gradient Text ─────────────────────────────────────────── */
+  .gradient-text {
+    background: linear-gradient(135deg, #F59E0B 0%, #EA580C 55%, #FDE68A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-dim {
+    background: linear-gradient(135deg, #92400E 0%, #F59E0B 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── Surface Utilities ─────────────────────────────────────── */
+  .surface {
+    background-color: var(--surface);
+  }
+
+  .surface-elevated {
+    background-color: var(--surface-elevated);
+  }
+
+  .surface-subtle {
+    background-color: var(--surface-subtle);
+  }
+
+  /* ─── Ember Gradient Backgrounds ───────────────────────────── */
+  .bg-ember-glow {
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(245, 158, 11, 0.1) 0%,
+      rgba(234, 88, 12, 0.04) 40%,
+      transparent 70%
+    );
+  }
+
+  .bg-ember-spot {
+    background: radial-gradient(
+      circle at center,
+      rgba(245, 158, 11, 0.14) 0%,
+      rgba(234, 88, 12, 0.06) 40%,
+      transparent 65%
+    );
+  }
+
+  /* ─── Pipeline node colors (for architecture/diagram pages) ── */
+  .node-pipeline {
+    border-color: var(--pipelineGlow);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.35);
+  }
+
+  .node-processing {
+    border-color: var(--processingGlow);
+    box-shadow: 0 0 8px rgba(234, 88, 12, 0.35);
+  }
+
+  .node-storage {
+    border-color: var(--storageGlow);
+    box-shadow: 0 0 8px rgba(253, 230, 138, 0.25);
+  }
+
+  /* ─── Focus ring ────────────────────────────────────────────── */
+  .focus-ember:focus-visible {
+    outline: 2px solid var(--primaryGlow);
+    outline-offset: 2px;
   }
 }
