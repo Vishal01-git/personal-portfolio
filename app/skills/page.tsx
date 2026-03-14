@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PipelineNode } from '@/components/ui/PipelineNode';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
@@ -21,7 +21,17 @@ const skillsData = [
 ];
 
 export default function SkillsPage() {
-  const [activeSkill, setActiveSkill] = useState<string | null>(null);
+  const [activeSkill, setActiveSkill] = useState<string>(skillsData[0].id);
+  const detailPanelRef = useRef<HTMLDivElement>(null);
+
+  const handleSkillClick = (id: string) => {
+    setActiveSkill(id);
+    if (detailPanelRef.current) {
+      setTimeout(() => {
+        detailPanelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col items-center pb-20">
@@ -42,14 +52,14 @@ export default function SkillsPage() {
             <div 
               key={skill.id} 
               className="cursor-pointer group flex-1 md:flex-initial flex justify-center" 
-              onMouseEnter={() => setActiveSkill(skill.id)}
-              onMouseLeave={() => setActiveSkill(null)}
+              onClick={() => handleSkillClick(skill.id)}
             >
               <PipelineNode 
                 icon={skill.icon} 
                 label={skill.name} 
                 glowColor={skill.color as any} 
                 status={activeSkill === skill.id ? "active" : "idle"}
+                isActive={activeSkill === skill.id}
               />
             </div>
           ))}
@@ -66,14 +76,14 @@ export default function SkillsPage() {
             <div 
               key={skill.id} 
               className="cursor-pointer group flex-1 md:flex-initial flex justify-center" 
-              onMouseEnter={() => setActiveSkill(skill.id)}
-              onMouseLeave={() => setActiveSkill(null)}
+              onClick={() => handleSkillClick(skill.id)}
             >
               <PipelineNode 
                 icon={skill.icon} 
                 label={skill.name} 
                 glowColor={skill.color as any} 
                 status={activeSkill === skill.id ? "processing" : "idle"}
+                isActive={activeSkill === skill.id}
               />
             </div>
           ))}
@@ -90,14 +100,14 @@ export default function SkillsPage() {
             <div 
               key={skill.id} 
               className="cursor-pointer group md:flex-initial flex justify-center" 
-              onMouseEnter={() => setActiveSkill(skill.id)}
-              onMouseLeave={() => setActiveSkill(null)}
+              onClick={() => handleSkillClick(skill.id)}
             >
               <PipelineNode 
                 icon={skill.icon} 
                 label={skill.name} 
                 glowColor={skill.color as any} 
                 status={activeSkill === skill.id ? "active" : "idle"}
+                isActive={activeSkill === skill.id}
               />
             </div>
           ))}
@@ -110,9 +120,9 @@ export default function SkillsPage() {
       </div>
 
       {/* Skill Detail Panel */}
-      <div className="w-full max-w-2xl mt-12 md:mt-20 h-[220px] md:h-48 mb-16">
+      <div ref={detailPanelRef} className="w-full max-w-2xl mt-12 md:mt-20 h-auto md:h-48 mb-16 scroll-mt-24">
         <AnimatePresence mode="wait">
-          {activeSkill ? (
+          {activeSkill && (
             <motion.div
               key={activeSkill}
               initial={{ opacity: 0, y: 10 }}
@@ -140,17 +150,6 @@ export default function SkillsPage() {
                   </ul>
                 </div>
               </GlassCard>
-            </motion.div>
-          ) : (
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="h-full flex items-center justify-center p-6 border border-white/5 rounded-2xl bg-surface/20 border-dashed"
-            >
-              <p className="text-textSecondary font-mono text-sm flex items-center gap-2">
-                <Terminal className="w-4 h-4 animate-pulse" />
-                Hover over a node to inspect module details
-              </p>
             </motion.div>
           )}
         </AnimatePresence>
