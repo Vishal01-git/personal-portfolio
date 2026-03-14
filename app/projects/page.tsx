@@ -6,27 +6,30 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { PipelineNode } from '@/components/ui/PipelineNode';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
-import { Github, ExternalLink, Globe, Database, Server, Zap, Cloud } from 'lucide-react';
+import { Github, ExternalLink, Globe, Database, Server, Zap, Cloud, Settings, Terminal, Activity, FileText, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 
 const projects = [
   {
     id: 1,
-    title: 'Real-Time Streaming ETL',
-    description: 'A high-throughput streaming pipeline processing IoT sensor data using Kafka and Spark Structured Streaming, persisting to a Delta Lake for low-latency analytics.',
-    tech: ['Apache Kafka', 'Spark Streaming', 'Delta Lake', 'AWS S3', 'Databricks'],
+    title: 'Job Market Arbitrage Data Platform',
+    description: 'An end-to-end data pipeline that extracts job market data to identify arbitrage opportunities.',
+    tech: ['Terraform', 'GitHub Actions', 'Python', 'Docker', 'Airflow', 'dbt', 'AWS Athena', 'Streamlit'],
     architecture: (
       <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 scale-90 md:scale-100 my-8 w-full overflow-x-auto no-scrollbar py-4">
-        <PipelineNode icon={<Globe className="w-6 h-6" />} label="IoT Hub" glowColor="none" />
+        <PipelineNode icon={<Settings className="w-6 h-6" />} label="Terraform & CI/CD" glowColor="none" />
         <DataFlowAnimation length="40px" color="primary" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="primary" className="md:hidden" />
-        <PipelineNode icon={<Zap className="w-6 h-6" />} label="Kafka" glowColor="primary" />
+        <PipelineNode icon={<Terminal className="w-6 h-6" />} label="Python/Docker" glowColor="primary" />
         <DataFlowAnimation length="40px" color="secondary" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="secondary" className="md:hidden" />
-        <PipelineNode icon={<Server className="w-6 h-6" />} label="Spark" glowColor="secondary" status="processing" />
+        <PipelineNode icon={<Zap className="w-6 h-6" />} label="Airflow" glowColor="secondary" status="processing" />
         <DataFlowAnimation length="40px" color="accent" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="accent" className="md:hidden" />
-        <PipelineNode icon={<Cloud className="w-6 h-6" />} label="Delta Lake" glowColor="accent" />
+        <PipelineNode icon={<Database className="w-6 h-6" />} label="dbt + Athena" glowColor="accent" />
+        <DataFlowAnimation length="40px" color="primary" className="hidden md:block" />
+        <DataFlowAnimation direction="vertical" length="20px" color="primary" className="md:hidden" />
+        <PipelineNode icon={<LayoutDashboard className="w-6 h-6" />} label="Streamlit" glowColor="primary" status="active" />
       </div>
     ),
     github: '#',
@@ -34,21 +37,21 @@ const projects = [
   },
   {
     id: 2,
-    title: 'Enterprise Data Warehouse Migration',
-    description: 'End-to-end migration of legacy on-premise relational data to Snowflake cloud data warehouse. Automated data transformation with DBT and scheduled via Airflow.',
-    tech: ['Snowflake', 'DBT', 'Airflow', 'Python', 'PostgreSQL'],
+    title: 'Automated Data Validation Accelerator',
+    description: 'A custom web application built to accelerate data migration testing by automating schema, count, and row-level data checks between legacy databases and cloud data lakes.',
+    tech: ['Python', 'Streamlit', 'Pandas', 'PyAthena', 'PyODBC'],
     architecture: (
       <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 scale-90 md:scale-100 my-8 w-full overflow-x-auto no-scrollbar py-4">
-        <PipelineNode icon={<Database className="w-6 h-6" />} label="Legacy DB" glowColor="none" />
+        <PipelineNode icon={<Database className="w-6 h-6" />} label="SQL Server & Athena" glowColor="none" />
         <DataFlowAnimation length="40px" color="primary" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="primary" className="md:hidden" />
-        <PipelineNode icon={<Server className="w-6 h-6" />} label="Airflow" glowColor="primary" />
+        <PipelineNode icon={<Activity className="w-6 h-6" />} label="Python Validator Engine" glowColor="primary" status="processing" />
         <DataFlowAnimation length="40px" color="secondary" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="secondary" className="md:hidden" />
-        <PipelineNode icon={<Database className="w-6 h-6" />} label="Snowflake" glowColor="secondary" status="active" />
+        <PipelineNode icon={<FileText className="w-6 h-6" />} label="HTML Report Generator" glowColor="secondary" />
         <DataFlowAnimation length="40px" color="accent" className="hidden md:block" />
         <DataFlowAnimation direction="vertical" length="20px" color="accent" className="md:hidden" />
-        <PipelineNode icon={<Zap className="w-6 h-6" />} label="DBT Models" glowColor="accent" />
+        <PipelineNode icon={<LayoutDashboard className="w-6 h-6" />} label="Streamlit UI" glowColor="accent" status="active" />
       </div>
     ),
     github: '#',

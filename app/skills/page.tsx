@@ -6,23 +6,25 @@ import { PipelineNode } from '@/components/ui/PipelineNode';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Badge } from '@/components/ui/Badge';
-import { Terminal, Database, Cloud, Cog, Server, Layers, Code, HardDrive } from 'lucide-react';
+import { Terminal, Database, Cloud, Cog, Server, Layers, Code, HardDrive, Box, Network, Github, LayoutDashboard, Cpu, BookOpen } from 'lucide-react';
 
 const skillsData = [
   { id: 'python', name: 'Python', icon: <Code className="w-6 h-6" />, category: 'Language', exp: '4+ Years', projects: ['Real-time ETL', 'ML Pipeline'], color: 'primary' },
-  { id: 'sql', name: 'SQL', icon: <Database className="w-6 h-6" />, category: 'Language', exp: '5+ Years', projects: ['Data Warehousing', 'Analytics Views'], color: 'primary' },
-  { id: 'spark', name: 'Apache Spark', icon: <Server className="w-6 h-6" />, category: 'Processing', exp: '3+ Years', projects: ['Log Processing', 'Recommendation Engine'], color: 'secondary' },
-  { id: 'dbt', name: 'DBT', icon: <Layers className="w-6 h-6" />, category: 'Transform', exp: '2+ Years', projects: ['Analytics Engineering', 'Data Quality'], color: 'secondary' },
-  { id: 'airflow', name: 'Airflow', icon: <Cog className="w-6 h-6" />, category: 'Orchestration', exp: '3+ Years', projects: ['Batch Pipelines', 'Dependency Management'], color: 'accent' },
-  { id: 'snowflake', name: 'Snowflake', icon: <HardDrive className="w-6 h-6" />, category: 'Warehouse', exp: '2+ Years', projects: ['Cloud DWH', 'Data Sharing'], color: 'accent' },
-  { id: 'aws', name: 'AWS', icon: <Cloud className="w-6 h-6" />, category: 'Cloud', exp: '4+ Years', projects: ['S3 Datalake', 'EMR Clusters', 'Lambda API'], color: 'primary' },
+  { id: 'aws', name: 'AWS Athena', icon: <Cloud className="w-6 h-6" />, category: 'Query Engine', exp: '3+ Years', projects: ['Serverless Analytics', 'Federated Queries'], color: 'secondary' },
+  { id: 'sql', name: 'SQL Server', icon: <Database className="w-6 h-6" />, category: 'Database', exp: '5+ Years', projects: ['Stored Procedures', 'Data Migration'], color: 'primary' },
+  { id: 'dbt', name: 'dbt', icon: <Layers className="w-6 h-6" />, category: 'Transform', exp: '2+ Years', projects: ['Analytics Engineering', 'Data Quality'], color: 'secondary' },
+  { id: 'airflow', name: 'Apache Airflow', icon: <Cog className="w-6 h-6" />, category: 'Orchestration', exp: '3+ Years', projects: ['Batch Pipelines', 'Dependency Management'], color: 'accent' },
+  { id: 'streamlit', name: 'Streamlit', icon: <LayoutDashboard className="w-6 h-6" />, category: 'Data Apps', exp: '2+ Years', projects: ['Dashboard UI', 'Data Validation App'], color: 'primary' },
+  { id: 'docker', name: 'Docker', icon: <Box className="w-6 h-6" />, category: 'Infrastructure', exp: '3+ Years', projects: ['Containerization', 'Microservices'], color: 'secondary' },
+  { id: 'terraform', name: 'Terraform', icon: <Network className="w-6 h-6" />, category: 'Infrastructure', exp: '2+ Years', projects: ['IaC', 'Cloud Resource Provisioning'], color: 'accent' },
+  { id: 'github_actions', name: 'GitHub Actions', icon: <Github className="w-6 h-6" />, category: 'CI/CD', exp: '3+ Years', projects: ['Automated Testing', 'Deployment Pipelines'], color: 'primary' },
 ];
 
 export default function SkillsPage() {
   const [activeSkill, setActiveSkill] = useState<string | null>(null);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 flex flex-col items-center">
+    <div className="max-w-6xl mx-auto px-6 flex flex-col items-center pb-20">
       <div className="text-center mb-16 space-y-4 pt-4">
         <h1 className="text-4xl md:text-5xl font-bold font-heading">
           Technical <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">Infrastructure</span>
@@ -34,9 +36,9 @@ export default function SkillsPage() {
 
       <div className="relative w-full max-w-4xl flex flex-col md:flex-row items-center justify-between gap-10 md:gap-0 mt-8">
         
-        {/* Languages / Sources */}
+        {/* Row 1 */}
         <div className="flex flex-row md:flex-col justify-center gap-8 md:gap-12 relative z-10 w-full md:w-auto">
-          {skillsData.slice(0, 2).map(skill => (
+          {skillsData.slice(0, 3).map(skill => (
             <div 
               key={skill.id} 
               className="cursor-pointer group flex-1 md:flex-initial flex justify-center" 
@@ -58,9 +60,9 @@ export default function SkillsPage() {
           <DataFlowAnimation length="100%" color="primary" />
         </div>
 
-        {/* Processing & Transform */}
+        {/* Row 2 */}
         <div className="flex flex-row md:flex-col justify-center gap-8 md:gap-12 relative z-10 w-full md:w-auto">
-          {skillsData.slice(2, 4).map(skill => (
+          {skillsData.slice(3, 6).map(skill => (
             <div 
               key={skill.id} 
               className="cursor-pointer group flex-1 md:flex-initial flex justify-center" 
@@ -82,9 +84,9 @@ export default function SkillsPage() {
           <DataFlowAnimation length="100%" color="secondary" />
         </div>
 
-        {/* Orchestration & Cloud & Warehouse */}
+        {/* Row 3 */}
         <div className="flex flex-row md:flex-col justify-center gap-8 md:gap-12 relative z-10 w-full md:w-auto items-center">
-          {skillsData.slice(4, 7).map(skill => (
+          {skillsData.slice(6, 9).map(skill => (
             <div 
               key={skill.id} 
               className="cursor-pointer group md:flex-initial flex justify-center" 
@@ -108,7 +110,7 @@ export default function SkillsPage() {
       </div>
 
       {/* Skill Detail Panel */}
-      <div className="w-full max-w-2xl mt-12 md:mt-20 h-[220px] md:h-48">
+      <div className="w-full max-w-2xl mt-12 md:mt-20 h-[220px] md:h-48 mb-16">
         <AnimatePresence mode="wait">
           {activeSkill ? (
             <motion.div
@@ -152,6 +154,54 @@ export default function SkillsPage() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Core Fundamentals Section */}
+      <div className="max-w-4xl w-full mt-8 md:mt-16 relative">
+        <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-1">
+          <div className="w-1 h-3 bg-gradient-to-b from-primaryGlow to-transparent" />
+          <div className="w-px h-6 bg-white/20" />
+        </div>
+        
+        <GlassCard className="p-8 md:p-12 relative overflow-hidden" glowColor="accent">
+          <div className="absolute top-0 right-0 p-8 opacity-10">
+            <Cpu className="w-48 h-48 rotate-12" />
+          </div>
+          
+          <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
+            <div className="flex-1 text-center md:text-left">
+              <h2 className="text-3xl font-bold font-heading mb-4 flex items-center justify-center md:justify-start gap-3">
+                <BookOpen className="w-8 h-8 text-accent" />
+                Core Fundamentals
+              </h2>
+              <p className="text-textSecondary leading-relaxed">
+                Aiming for engineering excellence at top-tier firms, I dedicate daily deliberate practice to mastering the foundational pillars of computer science. True scalability begins at the algorithmic level.
+              </p>
+            </div>
+            
+            <div className="flex-1 w-full space-y-4">
+              <div className="bg-black/40 border border-white/5 rounded-xl p-4 flex items-start gap-4 hover:border-accent/30 transition-colors">
+                <div className="bg-accent/10 p-2 rounded-lg mt-1">
+                  <Code className="w-5 h-5 text-accent" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white mb-1">Data Structures & Algorithms</h4>
+                  <p className="text-sm text-textSecondary">Continuous problem solving, complexity analysis, and optimization using Python and C++.</p>
+                </div>
+              </div>
+              
+              <div className="bg-black/40 border border-white/5 rounded-xl p-4 flex items-start gap-4 hover:border-primaryGlow/30 transition-colors">
+                <div className="bg-primaryGlow/10 p-2 rounded-lg mt-1">
+                  <Network className="w-5 h-5 text-primaryGlow" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white mb-1">System Design</h4>
+                  <p className="text-sm text-textSecondary">Architecting high-availability, fault-tolerant distributed systems and robust data pipelines under heavy load.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </GlassCard>
       </div>
     </div>
   );

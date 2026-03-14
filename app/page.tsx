@@ -6,7 +6,7 @@ import { BootSequence } from '@/components/BootSequence';
 import { Button } from '@/components/ui/Button';
 import { PipelineNode } from '@/components/ui/PipelineNode';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
-import { Database, Server, Cloud, Activity } from 'lucide-react';
+import { Database, Server, Cloud, Activity, Download } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Home() {
@@ -54,8 +54,13 @@ export default function Home() {
 
           {/* Actions */}
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+            <a href="/resume.pdf" download>
+              <Button size="lg" variant="primary" className="shadow-[0_0_20px_rgba(20,241,149,0.3)] hover:shadow-[0_0_30px_rgba(20,241,149,0.5)] transition-shadow border border-primaryGlow/50 flex items-center gap-2">
+                <Download className="w-5 h-5" /> Download Resume
+              </Button>
+            </a>
             <Link href="/projects">
-              <Button size="lg" variant="primary">Explore Projects</Button>
+              <Button size="lg" variant="outline">Explore Projects</Button>
             </Link>
             <Link href="/architecture">
               <Button size="lg" variant="outline">Architecture Lab</Button>

@@ -5,38 +5,7 @@ import { GlassCard } from '@/components/ui/GlassCard';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
 import { Briefcase, Calendar, Code, Target } from 'lucide-react';
 
-const experiences = [
-  {
-    id: 1,
-    role: "Senior Data Engineer",
-    company: "TechNexus Systems",
-    duration: "2021 - Present",
-    projects: [
-      "Architected real-time event streaming platform saving 40% on compute.",
-      "Led team of 4 engineers transitioning to a Lakehouse architecture."
-    ]
-  },
-  {
-    id: 2,
-    role: "Data Engineer",
-    company: "DataCloud Inc",
-    duration: "2018 - 2021",
-    projects: [
-      "Built 50+ Airflow DAGs for automated reporting.",
-      "Optimized Redshift queries reducing load times by 60%."
-    ]
-  },
-  {
-    id: 3,
-    role: "Database Administrator",
-    company: "Legacy Corp",
-    duration: "2016 - 2018",
-    projects: [
-      "Managed 10TB+ PostgreSQL instances.",
-      "Implemented automated backups and failover strategies."
-    ]
-  }
-];
+import { experiences } from '@/data/experience';
 
 export default function ExperiencePage() {
   return (
