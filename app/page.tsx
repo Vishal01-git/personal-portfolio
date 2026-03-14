@@ -28,7 +28,7 @@ export default function Home() {
           className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-12"
         >
           {/* Central Architecture Display */}
-          <div className="w-full flex justify-center mb-6 overflow-hidden">
+          <div className="w-full flex justify-center mb-6 py-8">
             <div className="flex items-center gap-1 md:gap-4 scale-[0.55] sm:scale-75 md:scale-100 origin-center transition-transform">
               <PipelineNode icon={<Database className="w-6 h-6" />} label="Source" glowColor="primary" status="active" />
               <DataFlowAnimation length="40px" color="primary" />
