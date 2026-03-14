@@ -1,32 +1,36 @@
 export const experiences = [
   {
     id: 1,
-    role: "Senior Data Engineer",
-    company: "TechNexus Systems",
-    duration: "2021 - Present",
+    role: "Associate Engineer (Data Engineer)",
+    company: "Virtusa Consulting Services Pvt. Ltd.",
+    duration: "Jan 2024 - Present",
     projects: [
-      "Optimized data pipeline execution time by X%, reducing overall cloud compute costs by $Y annually.",
-      "Redesigned data extraction processes, improving query performance by Z% and ensuring 99.9% data availability."
+      "Led the end-to-end migration of legacy data pipelines from SQL Server Stored Procedures to AWS Athena using dbt, delivering four production-grade data products.",
+      "Engineered a reusable union relation dbt macro, reducing code redundancy by 40%.",
+      "Developed a Python automation tool to generate dbt schema.yml files, cutting manual documentation time by 50% across 200+ models.",
+      "Optimized pipeline performance by implementing incremental models, reducing AWS Athena compute costs by 35% and decreasing query runtime by 60%.",
+      "Orchestrated Apache Airflow workflows with dynamic DAGs, achieving 99.9% pipeline reliability."
     ]
   },
   {
     id: 2,
-    role: "Data Engineer",
-    company: "DataCloud Inc",
-    duration: "2018 - 2021",
+    role: "Intern",
+    company: "Virtusa Consulting Services Pvt. Ltd.",
+    duration: "Jan 2023 - April 2023",
     projects: [
-      "Automated automated reporting workflow, saving X manual hours per week.",
-      "Optimized Redshift cluster performance, reducing average query load times by Y%."
+      "Established secure Virtual Private Clouds (VPC) on Google Cloud Platform (GCP) for 5+ critical microservices.",
+      "Assisted in the secure migration of on-premise data to cloud storage, optimizing storage tiering for cost efficiency.",
+      "Partnered with the DevOps team to streamline CI/CD deployment processes, contributing to a 20% improvement in project delivery speed."
     ]
   },
   {
     id: 3,
-    role: "Database Administrator",
-    company: "Legacy Corp",
-    duration: "2016 - 2018",
+    role: "B.Tech in Computer Science and Engineering",
+    company: "Lovely Professional University",
+    duration: "2019 - 2023",
     projects: [
-      "Maintained 99.99% uptime for 10TB+ PostgreSQL production instances.",
-      "Implemented disaster recovery protocols that reduced potential downtime by X%."
+      "Graduated with a CGPA of 8.02.",
+      "Built foundational knowledge in Data Structures, Algorithms, and System Design."
     ]
   }
 ];

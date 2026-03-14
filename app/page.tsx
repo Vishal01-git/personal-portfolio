@@ -28,15 +28,15 @@ export default function Home() {
           className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-12"
         >
           {/* Central Architecture Display */}
-          <div className="w-full flex justify-center mb-2">
-            <div className="flex items-center gap-2 md:gap-4 scale-75 md:scale-100">
-              <PipelineNode icon={<Database className="w-6 h-6" />} label="Source" glowColor="none" />
-              <DataFlowAnimation length="50px" color="primary" />
+          <div className="w-full flex justify-center mb-6 overflow-hidden">
+            <div className="flex items-center gap-1 md:gap-4 scale-[0.55] sm:scale-75 md:scale-100 origin-center transition-transform">
+              <PipelineNode icon={<Database className="w-6 h-6" />} label="Source" glowColor="primary" status="active" />
+              <DataFlowAnimation length="40px" color="primary" />
               <PipelineNode icon={<Server className="w-6 h-6" />} label="Processing" glowColor="primary" status="processing" />
-              <DataFlowAnimation length="50px" color="secondary" />
-              <PipelineNode icon={<Cloud className="w-6 h-6" />} label="Warehouse" glowColor="secondary" />
-              <DataFlowAnimation length="50px" color="accent" />
-              <PipelineNode icon={<Activity className="w-6 h-6" />} label="Analytics" glowColor="accent" status="active" />
+              <DataFlowAnimation length="40px" color="secondary" />
+              <PipelineNode icon={<Cloud className="w-6 h-6" />} label="Warehouse" glowColor="secondary" status="active" />
+              <DataFlowAnimation length="40px" color="accent" />
+              <PipelineNode icon={<Activity className="w-6 h-6" />} label="Analytics" glowColor="accent" status="processing" />
             </div>
           </div>
 

@@ -94,38 +94,38 @@ export default function ContactPage() {
         <div className="flex-[1] flex flex-col gap-6">
           <h3 className="text-sm font-mono uppercase tracking-widest text-textSecondary border-b border-white/10 pb-2">Network Nodes</h3>
           
-          <a href="https://github.com" target="_blank" rel="noreferrer" className="block">
+          <a href="https://github.com/Vishal01-git" target="_blank" rel="noreferrer" className="block">
             <GlassCard interactive glowColor="primary" className="p-5 flex items-center gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-surface border border-primaryGlow/30 group-hover:bg-primaryGlow/10 flex items-center justify-center transition-colors">
                 <Github className="w-6 h-6 text-primaryGlow cursor-pointer" />
               </div>
               <div>
                 <div className="font-mono font-bold text-white">GitHub</div>
-                <div className="text-xs text-textSecondary font-mono mt-1">/vishal-data</div>
+                <div className="text-xs text-textSecondary font-mono mt-1">/Vishal01-git</div>
               </div>
             </GlassCard>
           </a>
 
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="block">
+          <a href="https://linkedin.com/in/vishalprajapati07" target="_blank" rel="noreferrer" className="block">
             <GlassCard interactive glowColor="secondary" className="p-5 flex items-center gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-surface border border-secondaryGlow/30 group-hover:bg-secondaryGlow/10 flex items-center justify-center transition-colors">
                 <Linkedin className="w-6 h-6 text-secondaryGlow cursor-pointer" />
               </div>
               <div>
                 <div className="font-mono font-bold text-white">LinkedIn</div>
-                <div className="text-xs text-textSecondary font-mono mt-1">/in/vishal-de</div>
+                <div className="text-xs text-textSecondary font-mono mt-1">/in/vishalprajapati07</div>
               </div>
             </GlassCard>
           </a>
 
-          <a href="mailto:hello@example.com" className="block">
+          <a href="mailto:prajapativicky678@gmail.com" className="block">
             <GlassCard interactive glowColor="accent" className="p-5 flex items-center gap-4 group">
               <div className="w-12 h-12 rounded-xl bg-surface border border-accent/30 group-hover:bg-accent/10 flex items-center justify-center transition-colors">
                 <Mail className="w-6 h-6 text-accent cursor-pointer" />
               </div>
               <div>
                 <div className="font-mono font-bold text-white">Email</div>
-                <div className="text-xs text-textSecondary font-mono mt-1">hello@example.com</div>
+                <div className="text-xs text-textSecondary font-mono mt-1">prajapativicky678@gmail.com</div>
               </div>
             </GlassCard>
           </a>

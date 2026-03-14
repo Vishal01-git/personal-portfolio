@@ -21,7 +21,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Data Engineer Portfolio",
+  title: "Vishal Prajapati",
   description: "Cinematic Data Engineer Portfolio & Architecture Lab",
 };
 

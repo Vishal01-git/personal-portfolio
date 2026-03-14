@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Database, Terminal, Cpu, Network, User, Mail } from 'lucide-react';
 
@@ -18,11 +19,15 @@ export function Navbar() {
       <div className="max-w-6xl mx-auto">
         <GlassCard className="py-2 px-4 md:px-6 rounded-full flex items-center justify-between shadow-elevation border-white/10" glowColor="none">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-full bg-primaryGlow/10 border border-primaryGlow/50 flex items-center justify-center group-hover:shadow-neon-glow transition-all">
-              <Database className="w-4 h-4 text-primaryGlow" />
-            </div>
+            <Image 
+              src="/profile_image.jpg" 
+              alt="Vishal Prajapati" 
+              width={32} 
+              height={32} 
+              className="rounded-full object-cover border border-primaryGlow/50 group-hover:shadow-neon-glow transition-all" 
+            />
             <span className="font-heading font-bold text-lg tracking-wide hidden sm:block text-white">
-              DE Core
+              Vishal Prajapati
             </span>
           </Link>
 

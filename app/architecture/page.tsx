@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Terminal, Code2, Database, Cog, FileJson } from 'lucide-react';
 
-type PatternId = 'dbt-incremental' | 'airflow-dynamic' | 'athena-optimization';
+type PatternId = 'dbt-incremental' | 'schema-standards' | 'column-normalization';
 
 interface PatternData {
   id: PatternId;
@@ -19,9 +19,9 @@ interface PatternData {
 const patterns: PatternData[] = [
   {
     id: 'dbt-incremental',
-    title: 'dbt Incremental Models (Composite Key)',
+    title: 'dbt Incremental Strategy',
     icon: <Database className="w-5 h-5" />,
-    description: 'Efficiently processing large event streams by merging new data using a composite unique key strategy.',
+    description: 'Composite key approach for unique_key to manage upserts efficiently.',
     language: 'sql',
     code: `{{
   config(
@@ -31,79 +31,52 @@ const patterns: PatternData[] = [
   )
 }}
 
-SELECT
-  user_id,
-  event_timestamp,
-  event_name,
-  payload,
-  CURRENT_TIMESTAMP() as processed_at
-FROM {{ ref('stg_raw_events') }}
-
+SELECT * FROM {{ ref('stg_events') }}
 {% if is_incremental() %}
-  -- This filter will only be applied on an incremental run
-  WHERE event_timestamp >= (SELECT MAX(event_timestamp) FROM {{ this }})
+  WHERE event_timestamp > (SELECT max(event_timestamp) FROM {{ this }})
 {% endif %}`
   },
   {
-    id: 'airflow-dynamic',
-    title: 'Dynamic Airflow DAG Generation',
-    icon: <Cog className="w-5 h-5" />,
-    description: 'Programmatically generating DAGs from configuration files to scale pipeline management without code duplication.',
-    language: 'python',
-    code: `import yaml
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from datetime import datetime, timedelta
-
-def create_dag(dag_id, schedule, default_args, tables):
-    dag = DAG(dag_id, schedule_interval=schedule, default_args=default_args, catchup=False)
-    
-    with dag:
-        for table in tables:
-            PythonOperator(
-                task_id=f"extract_{table}",
-                python_callable=lambda t=table: print(f"Extracting {t}..."),
-            )
-            
-    return dag
-
-# Load config and generate DAGs dynamically
-with open('/opt/airflow/dags/config.yaml', 'r') as file:
-    config = yaml.safe_load(file)
-
-for pipeline in config['pipelines']:
-    dag_id = f"dynamic_ingestion_{pipeline['name']}"
-    globals()[dag_id] = create_dag(
-        dag_id=dag_id,
-        schedule=pipeline['schedule'],
-        default_args={'start_date': datetime(2023, 1, 1)},
-        tables=pipeline['tables']
-    )`
+    id: 'schema-standards',
+    title: 'Schema Definition Standards',
+    icon: <Database className="w-5 h-5" />,
+    description: 'Strict adherence to data typing standards defining all string columns as unbounded varchar.',
+    language: 'sql',
+    code: `CREATE TABLE IF NOT EXISTS staging.stg_user_events (
+    event_id varchar,
+    user_id varchar,
+    event_type varchar,
+    event_payload varchar,
+    created_at timestamp,
+    processed_at timestamp
+)
+WITH (
+    format = 'PARQUET',
+    parquet_compression = 'SNAPPY',
+    partitioned_by = ARRAY['year', 'month', 'day']
+);`
   },
   {
-    id: 'athena-optimization',
-    title: 'Athena Query Optimization',
-    icon: <FileJson className="w-5 h-5" />,
-    description: 'Cost-effective partition pruning and bucket elimination strategies for querying petabyte-scale data lakes via AWS Athena.',
+    id: 'column-normalization',
+    title: 'Column Normalization Macro',
+    icon: <Cog className="w-5 h-5" />,
+    description: 'Jinja/SQL macro that standardizes incoming raw data columns by replacing spaces with underscores.',
     language: 'sql',
-    code: `-- Optimize Athena queries by strictly enforcing partition filters
--- and leveraging columnar formats (Parquet/ORC).
+    code: `{% macro normalize_column_names(model) %}
 
-SELECT 
-    date_trunc('hour', event_time) AS hour,
-    event_type,
-    COUNT(*) as event_count,
-    SUM(cast(json_extract_scalar(payload, '$.amount') as double)) as total_value
-FROM "datalake_db"."user_behavior_events"
-WHERE 
-    -- Partition Pruning (Year, Month, Day)
-    year = '2023' 
-    AND month = '10'
-    AND day >= '01'
-    -- File-level pruning (Parquet predicate pushdown)
-    AND event_type IN ('purchase', 'add_to_cart')
-GROUP BY 1, 2
-ORDER BY 1 DESC;`
+  {% set columns = adapter.get_columns_in_relation(model) %}
+
+  SELECT
+  {% for column in columns %}
+    {% if ' ' in column.name %}
+      "{{ column.name }}" AS {{ column.name | replace(' ', '_') }}{% if not loop.last %}, {% endif %}
+    {% else %}
+      "{{ column.name }}"{% if not loop.last %}, {% endif %}
+    {% endif %}
+  {% endfor %}
+  FROM {{ model }}
+
+{% endmacro %}`
   }
 ];
 

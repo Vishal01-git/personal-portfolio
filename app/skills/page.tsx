@@ -9,14 +9,14 @@ import { Badge } from '@/components/ui/Badge';
 import { Terminal, Database, Cloud, Cog, Server, Layers, Code, HardDrive, Box, Network, Github, LayoutDashboard, Cpu, BookOpen } from 'lucide-react';
 
 const skillsData = [
-  { id: 'python', name: 'Python', icon: <Code className="w-6 h-6" />, category: 'Language', exp: '4+ Years', projects: ['Real-time ETL', 'ML Pipeline'], color: 'primary' },
-  { id: 'aws', name: 'AWS Athena', icon: <Cloud className="w-6 h-6" />, category: 'Query Engine', exp: '3+ Years', projects: ['Serverless Analytics', 'Federated Queries'], color: 'secondary' },
-  { id: 'sql', name: 'SQL Server', icon: <Database className="w-6 h-6" />, category: 'Database', exp: '5+ Years', projects: ['Stored Procedures', 'Data Migration'], color: 'primary' },
-  { id: 'dbt', name: 'dbt', icon: <Layers className="w-6 h-6" />, category: 'Transform', exp: '2+ Years', projects: ['Analytics Engineering', 'Data Quality'], color: 'secondary' },
-  { id: 'airflow', name: 'Apache Airflow', icon: <Cog className="w-6 h-6" />, category: 'Orchestration', exp: '3+ Years', projects: ['Batch Pipelines', 'Dependency Management'], color: 'accent' },
-  { id: 'streamlit', name: 'Streamlit', icon: <LayoutDashboard className="w-6 h-6" />, category: 'Data Apps', exp: '2+ Years', projects: ['Dashboard UI', 'Data Validation App'], color: 'primary' },
-  { id: 'docker', name: 'Docker', icon: <Box className="w-6 h-6" />, category: 'Infrastructure', exp: '3+ Years', projects: ['Containerization', 'Microservices'], color: 'secondary' },
-  { id: 'terraform', name: 'Terraform', icon: <Network className="w-6 h-6" />, category: 'Infrastructure', exp: '2+ Years', projects: ['IaC', 'Cloud Resource Provisioning'], color: 'accent' },
+  { id: 'python', name: 'Python', icon: <Code className="w-6 h-6" />, category: 'Language', exp: '4+ Years', projects: ['Pandas', 'Boto3', 'File Automation'], color: 'primary' },
+  { id: 'sql', name: 'Advanced SQL', icon: <Database className="w-6 h-6" />, category: 'Language', exp: '5+ Years', projects: ['CTEs', 'Window Functions', 'Stored Procedures'], color: 'secondary' },
+  { id: 'aws', name: 'AWS Athena', icon: <Cloud className="w-6 h-6" />, category: 'Cloud Query Engine', exp: '3+ Years', projects: ['Serverless Analytics', 'Data Lake Queries'], color: 'primary' },
+  { id: 'dbt', name: 'dbt (Core/Cloud)', icon: <Layers className="w-6 h-6" />, category: 'Transform', exp: '2+ Years', projects: ['Data Modeling', 'Incremental Loading', 'Macros'], color: 'secondary' },
+  { id: 'airflow', name: 'Apache Airflow', icon: <Cog className="w-6 h-6" />, category: 'Orchestration', exp: '3+ Years', projects: ['Dynamic DAGs', 'ETL/ELT Pipelines'], color: 'accent' },
+  { id: 'sqlserver', name: 'SQL Server', icon: <Database className="w-6 h-6" />, category: 'Database', exp: '5+ Years', projects: ['Stored Procedures', 'Legacy Migrations'], color: 'primary' },
+  { id: 'aws_eco', name: 'AWS Ecosystem', icon: <Cloud className="w-6 h-6" />, category: 'Cloud', exp: '3+ Years', projects: ['S3', 'Glue', 'Lambda', 'Redshift', 'DynamoDB'], color: 'secondary' },
+  { id: 'docker', name: 'Docker', icon: <Box className="w-6 h-6" />, category: 'Infrastructure', exp: '3+ Years', projects: ['Containerization', 'Microservices'], color: 'accent' },
   { id: 'github_actions', name: 'GitHub Actions', icon: <Github className="w-6 h-6" />, category: 'CI/CD', exp: '3+ Years', projects: ['Automated Testing', 'Deployment Pipelines'], color: 'primary' },
 ];
 
