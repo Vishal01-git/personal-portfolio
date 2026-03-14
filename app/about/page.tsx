@@ -16,16 +16,18 @@ export default function AboutPage() {
       </div>
 
       <GlassCard className="p-8 md:p-12 border-white/10 shadow-elevation relative overflow-hidden">
+        {/* Ember glow blob — top right */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-primaryGlow/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
-        
+
         <div className="flex flex-col md:flex-row gap-10 items-center md:items-start relative z-10">
+          {/* Profile image — shadow uses CSS variable, not hardcoded cyan */}
           <div className="relative w-48 h-48 md:w-64 md:h-64 flex-shrink-0 mx-auto md:mx-0 group">
             <div className="absolute inset-0 bg-primaryGlow/20 rounded-full blur-xl group-hover:bg-primaryGlow/40 transition-colors" />
-            <Image 
+            <Image
               src="/profile_image.jpg"
               alt="Vishal Prajapati"
               fill
-              className="object-cover rounded-2xl border border-primaryGlow/30 shadow-[0_0_30px_rgba(0,229,255,0.15)]"
+              className="object-cover rounded-2xl border border-primaryGlow/30 shadow-neon-glow"
             />
           </div>
 
@@ -40,7 +42,7 @@ export default function AboutPage() {
                 A high-performance processing unit specializing in the architecture, deployment, and optimization of distributed data systems. I build fault-tolerant pipelines that transform chaotic raw data into structured analytic assets.
               </p>
               <p>
-                My approach treats data infrastructure as a software engineering product—emphasizing CI/CD, isolated staging environments, and comprehensive data quality testing.
+                My approach treats data infrastructure as a software engineering product — emphasizing CI/CD, isolated staging environments, and comprehensive data quality testing.
               </p>
             </div>
 
@@ -58,7 +60,6 @@ export default function AboutPage() {
                 </GlassCard>
               </div>
             </div>
-
           </div>
         </div>
       </GlassCard>

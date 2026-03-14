@@ -1,6 +1,7 @@
 export const experiences = [
   {
     id: 1,
+    type: 'work',
     role: "Associate Engineer (Data Engineer)",
     company: "Virtusa Consulting Services Pvt. Ltd.",
     duration: "Jan 2024 - Present",
@@ -14,6 +15,7 @@ export const experiences = [
   },
   {
     id: 2,
+    type: 'work',
     role: "Intern",
     company: "Virtusa Consulting Services Pvt. Ltd.",
     duration: "Jan 2023 - April 2023",
@@ -25,6 +27,7 @@ export const experiences = [
   },
   {
     id: 3,
+    type: 'education',
     role: "B.Tech in Computer Science and Engineering",
     company: "Lovely Professional University",
     duration: "2019 - 2023",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { BootSequence } from '@/components/BootSequence';
 import { Button } from '@/components/ui/Button';
@@ -9,8 +9,59 @@ import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
 import { Database, Server, Cloud, Activity, Download, Network, Cpu, Terminal, User, Mail } from 'lucide-react';
 import Link from 'next/link';
 
+// Impact metrics pulled from real experience data
+const metrics = [
+  { label: "pipelines shipped",   value: 4,   suffix: "",  color: "text-primaryGlow" },
+  { label: "dbt models owned",    value: 200, suffix: "+", color: "text-secondaryGlow" },
+  { label: "cost reduction",      value: 35,  suffix: "%", color: "text-accent" },
+  { label: "pipeline reliability",value: 99.9,suffix: "%", color: "text-primaryGlow" },
+];
+
+function useCountUp(target: number, duration = 1400, started = false) {
+  const [value, setValue] = useState(0);
+  useEffect(() => {
+    if (!started) return;
+    const steps = 40;
+    const stepTime = duration / steps;
+    let step = 0;
+    const timer = setInterval(() => {
+      step++;
+      setValue(parseFloat((target * (step / steps)).toFixed(1)));
+      if (step >= steps) { setValue(target); clearInterval(timer); }
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [target, duration, started]);
+  return value;
+}
+
+function MetricCard({ label, value, suffix, color, started }: { label: string; value: number; suffix: string; color: string; started: boolean }) {
+  const display = useCountUp(value, 1400, started);
+  const isDecimal = value % 1 !== 0;
+  return (
+    <div className="flex flex-col items-center gap-1 px-4 py-3 rounded-xl bg-surface/40 border border-white/5 min-w-[100px]">
+      <span className={`font-mono font-bold text-2xl md:text-3xl ${color}`}>
+        {isDecimal ? display.toFixed(1) : Math.round(display)}{suffix}
+      </span>
+      <span className="text-[11px] font-mono text-textSecondary text-center leading-tight">{label}</span>
+    </div>
+  );
+}
+
 export default function Home() {
   const [bootStrapComplete, setBootStrapComplete] = useState(false);
+  const [metricsStarted, setMetricsStarted] = useState(false);
+  const metricsRef = useRef<HTMLDivElement>(null);
+
+  // Kick off counter animation when metrics row enters viewport
+  useEffect(() => {
+    if (!bootStrapComplete) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setMetricsStarted(true); obs.disconnect(); } },
+      { threshold: 0.3 }
+    );
+    if (metricsRef.current) obs.observe(metricsRef.current);
+    return () => obs.disconnect();
+  }, [bootStrapComplete]);
 
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center relative w-full pt-4">
@@ -21,14 +72,14 @@ export default function Home() {
       </AnimatePresence>
 
       {bootStrapComplete && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-12"
+          className="w-full max-w-5xl mx-auto px-6 flex flex-col items-center text-center gap-10"
         >
-          {/* Central Architecture Display - Hidden on Mobile */}
-          <div className="hidden md:flex w-full justify-center mb-6 py-8">
+          {/* Pipeline diagram — desktop only */}
+          <div className="hidden md:flex w-full justify-center py-6">
             <div className="flex items-center gap-1 md:gap-4 scale-[0.55] sm:scale-75 md:scale-100 origin-center transition-transform">
               <PipelineNode icon={<Database className="w-6 h-6" />} label="Source" glowColor="primary" status="active" />
               <DataFlowAnimation length="40px" color="primary" />
@@ -40,10 +91,10 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Hero Content */}
+          {/* Hero */}
           <div className="max-w-3xl space-y-6">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-heading tracking-tight leading-tight">
-              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow drop-shadow-[0_0_15px_rgba(0,229,255,0.3)]">Vishal</span>
+              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">Vishal</span>
               <br />
               Data Engineer
             </h1>
@@ -52,15 +103,22 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Mobile Quick Nav - Only visible on small screens */}
-          <div className="grid grid-cols-2 gap-3 w-full max-w-md mx-auto md:hidden mt-4">
+          {/* Live Impact Metrics */}
+          <div ref={metricsRef} className="w-full flex flex-wrap justify-center gap-3 py-2">
+            {metrics.map(m => (
+              <MetricCard key={m.label} {...m} started={metricsStarted} />
+            ))}
+          </div>
+
+          {/* Mobile quick nav */}
+          <div className="grid grid-cols-2 gap-3 w-full max-w-md mx-auto md:hidden">
             {[
               { name: 'Architecture', href: '/architecture', icon: <Network className="w-5 h-5 text-primaryGlow" /> },
-              { name: 'Projects', href: '/projects', icon: <Database className="w-5 h-5 text-secondaryGlow" /> },
-              { name: 'Skills', href: '/skills', icon: <Cpu className="w-5 h-5 text-accent" /> },
-              { name: 'Experience', href: '/experience', icon: <Terminal className="w-5 h-5 text-primaryGlow" /> },
-              { name: 'About', href: '/about', icon: <User className="w-5 h-5 text-secondaryGlow" /> },
-              { name: 'Contact', href: '/contact', icon: <Mail className="w-5 h-5 text-accent" /> }
+              { name: 'Projects',     href: '/projects',     icon: <Database className="w-5 h-5 text-secondaryGlow" /> },
+              { name: 'Skills',       href: '/skills',       icon: <Cpu className="w-5 h-5 text-accent" /> },
+              { name: 'Experience',   href: '/experience',   icon: <Terminal className="w-5 h-5 text-primaryGlow" /> },
+              { name: 'About',        href: '/about',        icon: <User className="w-5 h-5 text-secondaryGlow" /> },
+              { name: 'Contact',      href: '/contact',      icon: <Mail className="w-5 h-5 text-accent" /> }
             ].map((link) => (
               <Link key={link.name} href={link.href}>
                 <div className="bg-surface/40 backdrop-blur-sm border border-white/5 p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-white/5 transition-colors">
@@ -71,10 +129,10 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Actions */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <a href="/resume.pdf" download>
-              <Button size="lg" variant="primary" className="shadow-[0_0_20px_rgba(20,241,149,0.3)] hover:shadow-[0_0_30px_rgba(20,241,149,0.5)] transition-shadow border border-primaryGlow/50 flex items-center gap-2">
+              <Button size="lg" variant="primary" className="shadow-neon-glow hover:shadow-neon-glow transition-shadow border border-primaryGlow/50 flex items-center gap-2">
                 <Download className="w-5 h-5" /> Download Resume
               </Button>
             </a>

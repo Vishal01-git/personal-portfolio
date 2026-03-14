@@ -7,18 +7,19 @@ export interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   interactive?: boolean;
 }
 
-export function GlassCard({ 
-  children, 
+export function GlassCard({
+  children,
   glowColor = "none",
   interactive = false,
   className,
-  ...props 
+  ...props
 }: GlassCardProps) {
   const glowClasses = {
-    primary: "border-primaryGlow/30 hover:border-primaryGlow shadow-[0_0_15px_rgba(0,229,255,0.1)]",
-    secondary: "border-secondaryGlow/30 hover:border-secondaryGlow shadow-[0_0_15px_rgba(138,43,226,0.1)]",
-    accent: "border-accent/30 hover:border-accent shadow-[0_0_15px_rgba(20,241,149,0.1)]",
-    none: "border-white/5",
+    // Uses CSS variable shadows so they auto-update with any palette change
+    primary:   "border-primaryGlow/30   hover:border-primaryGlow/60   shadow-neon-glow",
+    secondary: "border-secondaryGlow/30 hover:border-secondaryGlow/60 shadow-[var(--shadow-neon-subtle)]",
+    accent:    "border-accent/30        hover:border-accent/60        shadow-[var(--shadow-neon-subtle)]",
+    none:      "border-white/5",
   };
 
   return (
