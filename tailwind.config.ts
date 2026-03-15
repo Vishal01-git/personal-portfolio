@@ -21,6 +21,11 @@ const config: Config = {
         pipelineGlow: "var(--pipelineGlow)",
         processingGlow: "var(--processingGlow)",
         storageGlow: "var(--storageGlow)",
+        textTertiary: "var(--textTertiary)",
+        statusSuccess: "var(--statusSuccess)",
+        statusError: "var(--statusError)",
+        statusWarning: "var(--statusWarning)",
+        statusInfo: "var(--statusInfo)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],

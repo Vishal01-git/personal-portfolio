@@ -3,6 +3,9 @@ import { JetBrains_Mono, Syne, Inter } from "next/font/google";
 import { GlobalBackground } from "@/components/GlobalBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CommandPalette } from "@/components/CommandPalette";
+import { PageTransition } from "@/components/PageTransition";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import "./globals.css";
 
 const inter = Inter({
@@ -10,9 +13,8 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-// Syne replaces Space Grotesk — distinctive, strong, less overused
 const syne = Syne({
-  variable: "--font-space-grotesk", // keeps same CSS variable so all font-heading classes work unchanged
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
 });
@@ -33,9 +35,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og-image.png", // add a 1200×630 screenshot of your hero to /public/
-        width: 1200,
-        height: 630,
+        url: "/og-image.png",
+        width: 1918,
+        height: 874,
         alt: "Vishal Prajapati — Data Engineer Portfolio",
       },
     ],
@@ -59,11 +61,17 @@ export default function RootLayout({
         className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} antialiased bg-background text-textPrimary selection:bg-primaryGlow/30`}
       >
         <GlobalBackground />
+        {/* Command palette is global — lives outside page transitions */}
+        <CommandPalette />
         <Navbar />
         <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
-          {children}
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
         <Footer />
+        {/* Scroll-to-top floats above everything */}
+        <ScrollToTop />
       </body>
     </html>
   );

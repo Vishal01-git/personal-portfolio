@@ -13,8 +13,8 @@ export interface PipelineNodeProps {
 export function PipelineNode({ icon, label, glowColor = "primary", status = "idle", isActive = false, className }: PipelineNodeProps) {
   const glowClasses = {
     primary: "border-primaryGlow/50 shadow-neon-glow",
-    secondary: "border-secondaryGlow/50 shadow-[0_0_15px_rgba(138,43,226,0.5)]",
-    accent: "border-accent/50 shadow-[0_0_15px_rgba(20,241,149,0.5)]",
+    secondary: "border-secondaryGlow/50 shadow-[var(--shadow-neon-subtle)]",
+    accent:    "border-accent/50 shadow-[var(--shadow-neon-subtle)]",
     none: "border-white/10",
   };
 

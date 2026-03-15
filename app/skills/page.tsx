@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Badge } from '@/components/ui/Badge';
+import { CoreFundamentals } from '@/components/CoreFundamentals';
 import {
   Terminal, Database, Cloud, Cog, Layers, Code,
   Box, Network, Github, Cpu, BookOpen
@@ -375,49 +376,8 @@ export default function SkillsPage() {
 
       {/* ── Core Fundamentals ─────────────────────────────────────────────── */}
       <div className="max-w-4xl w-full mt-16 relative">
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1">
-          <div className="w-px h-8 bg-gradient-to-b from-transparent via-primaryGlow/40 to-transparent" />
-        </div>
-
-        <GlassCard className="p-8 md:p-12 relative overflow-hidden" glowColor="accent">
-          <div className="absolute top-0 right-0 p-8 opacity-10">
-            <Cpu className="w-48 h-48 rotate-12" />
-          </div>
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
-            <div className="flex-1 text-center md:text-left">
-              <h2 className="text-3xl font-bold font-heading mb-4 flex items-center justify-center md:justify-start gap-3">
-                <BookOpen className="w-8 h-8 text-accent" />
-                Core Fundamentals
-              </h2>
-              <p className="text-textSecondary leading-relaxed">
-                Aiming for engineering excellence at top-tier firms, I dedicate daily deliberate practice to mastering the foundational pillars of computer science. True scalability begins at the algorithmic level.
-              </p>
-            </div>
-
-            <div className="flex-1 w-full space-y-4">
-              <div className="bg-black/40 border border-white/5 rounded-xl p-4 flex items-start gap-4 hover:border-accent/30 transition-colors">
-                <div className="bg-accent/10 p-2 rounded-lg mt-1">
-                  <Code className="w-5 h-5 text-accent" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-white mb-1">Data Structures & Algorithms</h4>
-                  <p className="text-sm text-textSecondary">Continuous problem solving, complexity analysis, and optimization using Python and C++.</p>
-                </div>
-              </div>
-
-              <div className="bg-black/40 border border-white/5 rounded-xl p-4 flex items-start gap-4 hover:border-primaryGlow/30 transition-colors">
-                <div className="bg-primaryGlow/10 p-2 rounded-lg mt-1">
-                  <Network className="w-5 h-5 text-primaryGlow" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-white mb-1">System Design</h4>
-                  <p className="text-sm text-textSecondary">Architecting high-availability, fault-tolerant distributed systems and robust data pipelines under heavy load.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </GlassCard>
+        <div className="absolute -top-8 left-1/2 -translate-x-1/2 w-px h-8 bg-gradient-to-b from-transparent via-primaryGlow/40 to-transparent" />
+        <CoreFundamentals />
       </div>
     </div>
   );
