@@ -37,27 +37,27 @@ export interface FundamentalProcess {
 export const skills: Skill[] = [
   {
     id: 'sql', name: 'Advanced SQL', category: 'Language',
-    exp: '5+ Years', proficiency: 95, tier: 'core', color: 'primary',
+    exp: '1.5+ Years', proficiency: 80, tier: 'core', color: 'primary',
     projects: ['CTEs', 'Window Functions', 'Stored Procedures'],
   },
   {
     id: 'sqlserver', name: 'SQL Server', category: 'Database',
-    exp: '5+ Years', proficiency: 90, tier: 'core', color: 'primary',
+    exp: '1.5+ Years', proficiency: 80, tier: 'core', color: 'primary',
     projects: ['Stored Procedures', 'Legacy Migrations'],
   },
   {
     id: 'python', name: 'Python', category: 'Language',
-    exp: '4+ Years', proficiency: 88, tier: 'core', color: 'secondary',
+    exp: '2+ Years', proficiency: 75, tier: 'core', color: 'secondary',
     projects: ['Pandas', 'Boto3', 'File Automation'],
   },
   {
     id: 'aws', name: 'AWS Athena', category: 'Cloud Query',
     exp: '3+ Years', proficiency: 85, tier: 'core', color: 'primary',
-    projects: ['Serverless Analytics', 'Data Lake Queries'],
+    projects: ['Athena', 'Glue','RedShift'],
   },
   {
     id: 'airflow', name: 'Apache Airflow', category: 'Orchestration',
-    exp: '3+ Years', proficiency: 82, tier: 'core', color: 'secondary',
+    exp: '1+ Years', proficiency: 70, tier: 'core', color: 'secondary',
     projects: ['Dynamic DAGs', 'ETL/ELT Pipelines'],
   },
   {
@@ -72,12 +72,12 @@ export const skills: Skill[] = [
   },
   {
     id: 'docker', name: 'Docker', category: 'Infrastructure',
-    exp: '3+ Years', proficiency: 72, tier: 'familiar', color: 'secondary',
+    exp: '1.5+ Years', proficiency: 70, tier: 'familiar', color: 'secondary',
     projects: ['Containerization', 'Microservices'],
   },
   {
     id: 'github_actions', name: 'GitHub Actions', category: 'CI/CD',
-    exp: '3+ Years', proficiency: 68, tier: 'familiar', color: 'primary',
+    exp: '1+ Years', proficiency: 60, tier: 'familiar', color: 'primary',
     projects: ['Automated Testing', 'Deployment Pipelines'],
   },
 ];
@@ -91,15 +91,15 @@ export const skills: Skill[] = [
 export const fundamentals = {
   careerStart: new Date('2024-01-05T09:00:00'),
 
-  description: "Daily deliberate practice on the pillars that separate engineers who ship fast from those who ship right. Scalability starts at the algorithm.",
+  description: "Proficient in Data Structures & Algorithms with a solid understanding of System Design principles, enabling analysis of application internals and identification of performance bottlenecks and improvement areas.",
 
   processes: [
     {
       title: "DSA / Algorithms",
-      sub:   "Python · C++",
+      sub:   "Java",
       logs: [
-        { level: 'ok'  as LogLevel, text: 'Solved: sliding window O(n)', offsetSecondsAgo: 68 },
-        { level: 'run' as LogLevel, text: 'Graph BFS — 3 test cases',    offsetSecondsAgo: 28 },
+        { level: 'ok'  as LogLevel, text: 'Arrays,String,LinkedList,Sliding Window', offsetSecondsAgo: 68 },
+        { level: 'run' as LogLevel, text: 'running test cases...',    offsetSecondsAgo: 28 },
         { level: 'ok'  as LogLevel, text: 'All passed',                  offsetSecondsAgo: 0  },
       ],
     },

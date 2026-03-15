@@ -5,8 +5,8 @@
 export const about = {
   // ── Bio ───────────────────────────────────────────────────────────────────
   bio: [
-    "A high-performance processing unit specializing in the architecture, deployment, and optimization of distributed data systems. I build fault-tolerant pipelines that transform chaotic raw data into structured analytic assets.",
-    "My approach treats data infrastructure as a software engineering product — emphasizing CI/CD, isolated staging environments, and comprehensive data quality testing.",
+    "I'm a Data Engineer based in India who enjoys building reliable data pipelines and working with large-scale data systems. My day-to-day involves Python, Spark, Kafka, Airflow, Docker, Kubernetes, and AWS basically anything that keeps data moving and infrastructure running smoothly. I like understanding how things work under the hood, which helps me build systems that are both efficient and easy to maintain.",
+    "I care about writing clean code and making good engineering decisions, not just getting things to work. When something breaks, I dig into the root cause rather than patching it up. I'm always looking to improve the systems I build and pick up new tools along the way.",
   ],
 
   // ── Certifications ────────────────────────────────────────────────────────

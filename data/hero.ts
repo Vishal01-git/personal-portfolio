@@ -8,7 +8,7 @@ export const hero = {
   role:      "Data Engineer",
 
   // ── Subtitle ──────────────────────────────────────────────────────────────
-  subtitle: "Designing scalable data pipelines and modern data platforms. I turn complex data architecture into reliable, high-performance systems.",
+  subtitle: "Data Engineer who builds reliable pipelines, automates complex workflows, and designs data infrastructure that scales well and stays easy to maintain.",
 
   // ── Impact metrics (animated count-up cards) ─────────────────────────────
   // value: the number to count up to
