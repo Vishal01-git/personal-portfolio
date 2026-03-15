@@ -6,12 +6,10 @@ import { Footer } from "@/components/Footer";
 import { CommandPalette } from "@/components/CommandPalette";
 import { PageTransition } from "@/components/PageTransition";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { meta } from "@/data/meta";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 const syne = Syne({
   variable: "--font-space-grotesk",
@@ -25,52 +23,35 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vishal Prajapati — Data Engineer",
-  description: "Data Engineer specializing in scalable pipelines, dbt, Airflow, and AWS. Architecture Lab, projects, and more.",
+  title:       meta.title,
+  description: meta.description,
   openGraph: {
-    title: "Vishal Prajapati — Data Engineer",
-    description: "Scalable data pipelines · dbt · Airflow · AWS · Architecture Lab",
-    url: "https://vishalp.vercel.app",
-    siteName: "Vishal Prajapati Portfolio",
-    type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1918,
-        height: 874,
-        alt: "Vishal Prajapati — Data Engineer Portfolio",
-      },
-    ],
+    title:       meta.title,
+    description: meta.ogDescription,
+    url:         meta.siteUrl,
+    siteName:    meta.title,
+    type:        "website",
+    images: [{ url: meta.ogImage, width: 1200, height: 630, alt: meta.title }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Vishal Prajapati — Data Engineer",
-    description: "Scalable data pipelines · dbt · Airflow · AWS",
-    images: ["/og-image.png"],
+    card:        "summary_large_image",
+    title:       meta.title,
+    description: meta.ogDescription,
+    images:      [meta.ogImage],
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <body
-        className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} antialiased bg-background text-textPrimary selection:bg-primaryGlow/30`}
-      >
+      <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} antialiased bg-background text-textPrimary selection:bg-primaryGlow/30`}>
         <GlobalBackground />
-        {/* Command palette is global — lives outside page transitions */}
         <CommandPalette />
         <Navbar />
         <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
-          <PageTransition>
-            {children}
-          </PageTransition>
+          <PageTransition>{children}</PageTransition>
         </main>
         <Footer />
-        {/* Scroll-to-top floats above everything */}
         <ScrollToTop />
       </body>
     </html>

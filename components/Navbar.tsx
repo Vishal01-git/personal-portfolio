@@ -7,6 +7,7 @@ import { usePathname } from 'next/navigation';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { Database, Terminal, Cpu, Network, User, Mail } from 'lucide-react';
 import { CommandPaletteTrigger } from '@/components/CommandPalette';
+import { meta } from '@/data/meta';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -27,27 +28,29 @@ export function Navbar() {
           className="py-2 px-4 md:px-5 rounded-full flex items-center justify-between shadow-elevation border-white/10"
           glowColor="none"
         >
-          {/* ── Left: avatar + name + "open to roles" stacked under name ── */}
+          {/* Left: avatar + name + status */}
           <Link href="/" className="flex items-center gap-3 group shrink-0 mr-4">
             <Image
               src="/profile_image.jpg"
-              alt="Vishal Prajapati"
+              alt={meta.name}
               width={32}
               height={32}
               className="rounded-full object-cover border border-primaryGlow/50 group-hover:shadow-neon-glow transition-all shrink-0"
             />
             <div className="hidden sm:flex flex-col gap-0.5 leading-none">
               <span className="font-heading font-bold text-base tracking-wide text-white">
-                Vishal Prajapati
+                {meta.name}
               </span>
-              <span className="flex items-center gap-1.5 text-[10px] font-mono text-textSecondary/80">
-                <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse shrink-0" />
-                Open to roles
-              </span>
+              {meta.openToRoles && (
+                <span className="flex items-center gap-1.5 text-[10px] font-mono text-textSecondary/80">
+                  <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse shrink-0" />
+                  {meta.statusText}
+                </span>
+              )}
             </div>
           </Link>
 
-          {/* ── Centre: nav links — icons only on md, labels on lg+ ──────── */}
+          {/* Centre: nav links */}
           <div className="flex items-center gap-0.5">
             {links.map((link) => {
               const isActive = pathname === link.href;
@@ -64,10 +67,7 @@ export function Navbar() {
                   <span className={`transition-colors ${isActive ? 'opacity-100' : 'opacity-60'}`}>
                     {link.icon}
                   </span>
-                  {/* Labels visible only on large screens where there's room */}
                   <span className="hidden xl:block">{link.name}</span>
-
-                  {/* Active indicator dot */}
                   {isActive && (
                     <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-primaryGlow shadow-neon-glow" />
                   )}
@@ -76,7 +76,7 @@ export function Navbar() {
             })}
           </div>
 
-          {/* ── Right: ⌘K search trigger ─────────────────────────────────── */}
+          {/* Right: ⌘K */}
           <div className="shrink-0 ml-3">
             <CommandPaletteTrigger />
           </div>
