@@ -12,10 +12,10 @@ export function GlassCard({
   glowColor = "none",
   interactive = false,
   className,
+  style,
   ...props
 }: GlassCardProps) {
   const glowClasses = {
-    // Uses CSS variable shadows so they auto-update with any palette change
     primary:   "border-primaryGlow/30   hover:border-primaryGlow/60   shadow-neon-glow",
     secondary: "border-secondaryGlow/30 hover:border-secondaryGlow/60 shadow-[var(--shadow-neon-subtle)]",
     accent:    "border-accent/30        hover:border-accent/60        shadow-[var(--shadow-neon-subtle)]",
@@ -25,11 +25,16 @@ export function GlassCard({
   return (
     <div
       className={cn(
-        "bg-surface/60 backdrop-blur-xl border rounded-2xl p-6 transition-all duration-300",
+        "backdrop-blur-xl border rounded-2xl p-6 transition-all duration-300",
         glowClasses[glowColor],
         interactive && "hover:-translate-y-1 hover:shadow-neon-glow cursor-pointer",
         className
       )}
+      style={{
+        backgroundColor: 'var(--glass-bg)',
+        borderColor: glowColor === 'none' ? 'var(--glass-border)' : undefined,
+        ...style,
+      }}
       {...props}
     >
       {children}

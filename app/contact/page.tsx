@@ -107,9 +107,9 @@ export default function ContactPage() {
           </a>
 
           <a href={links.linkedin} target="_blank" rel="noreferrer" className="block">
-            <GlassCard interactive glowColor="secondary" className="p-5 flex items-center gap-4 group">
-              <div className="w-12 h-12 rounded-xl bg-surface border border-secondaryGlow/30 group-hover:bg-secondaryGlow/10 flex items-center justify-center transition-colors">
-                <Linkedin className="w-6 h-6 text-secondaryGlow" />
+            <GlassCard interactive glowColor="primary" className="p-5 flex items-center gap-4 group">
+              <div className="w-12 h-12 rounded-xl bg-surface border border-primaryGlow/30 group-hover:bg-primaryGlow/10 flex items-center justify-center transition-colors">
+                <Linkedin className="w-6 h-6 text-primaryGlow" />
               </div>
               <div>
                 <div className="font-mono font-bold text-white">LinkedIn</div>
@@ -119,9 +119,9 @@ export default function ContactPage() {
           </a>
 
           <a href={`mailto:${links.email}`} className="block">
-            <GlassCard interactive glowColor="accent" className="p-5 flex items-center gap-4 group">
-              <div className="w-12 h-12 rounded-xl bg-surface border border-accent/30 group-hover:bg-accent/10 flex items-center justify-center transition-colors">
-                <Mail className="w-6 h-6 text-accent" />
+            <GlassCard interactive glowColor="primary" className="p-5 flex items-center gap-4 group">
+              <div className="w-12 h-12 rounded-xl bg-surface border border-primaryGlow/30 group-hover:bg-primaryGlow/10 flex items-center justify-center transition-colors">
+                <Mail className="w-6 h-6 text-primaryGlow" />
               </div>
               <div>
                 <div className="font-mono font-bold text-white">Email</div>

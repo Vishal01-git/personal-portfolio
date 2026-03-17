@@ -3,55 +3,167 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
+  /* ═══════════════════════════════════════════════════════════════════
+     DARK THEME  (default — Ember Terminal)
+  ═══════════════════════════════════════════════════════════════════ */
+  :root,
+  [data-theme="dark"] {
     /* ─── Backgrounds ──────────────────────────────────────────── */
-    --background: #111008;        /* deep scorched black */
-    --surface: #1C1810;           /* charcoal with warm undertone */
-    --surface-elevated: #251F14;  /* cards, modals, elevated panels */
-    --surface-subtle: #0E0C06;    /* inset areas, code blocks */
+    --background:       #111008;
+    --surface:          #1C1810;
+    --surface-elevated: #251F14;
+    --surface-subtle:   #0E0C06;
 
-    /* ─── Brand / Glow Colors ─────────────────────────────────── */
-    --primaryGlow: #F59E0B;       /* scorched amber — primary actions, highlights */
-    --secondaryGlow: #EA580C;     /* volcanic orange — secondary accents, hover states */
-    --accent: #FDE68A;            /* pale ember — subtle accents, active states */
+    /* ─── Brand / Glow ────────────────────────────────────────── */
+    --primaryGlow:   #F59E0B;
+    --secondaryGlow: #EA580C;
+    --accent:        #FDE68A;
 
-    /* ─── Pipeline / Data Visualization ──────────────────────── */
-    --pipelineGlow: #F59E0B;      /* ingestion / source nodes */
-    --processingGlow: #EA580C;    /* transform / processing nodes */
-    --storageGlow: #FDE68A;       /* storage / sink nodes */
+    /* ─── Pipeline ────────────────────────────────────────────── */
+    --pipelineGlow:   #F59E0B;
+    --processingGlow: #EA580C;
+    --storageGlow:    #FDE68A;
 
-    /* ─── Contrast layers ─────────────────────────────────────── */
-    --contrastGlow: #92400E;      /* deep burnt orange — borders, inactive states */
-    --contrastSoft: #1C1208;      /* very muted — subtle dividers, bg tints */
+    /* ─── Contrast ────────────────────────────────────────────── */
+    --contrastGlow: #92400E;
+    --contrastSoft: #1C1208;
 
     /* ─── Text ────────────────────────────────────────────────── */
-    --textPrimary: #F5F0E8;       /* warm parchment — body text */
-    --textSecondary: #A89880;     /* aged paper — secondary labels */
-    --textTertiary: #5C4A30;      /* dark soot — hints, placeholders */
-    --textInverse: #111008;       /* for text on bright amber surfaces */
+    --textPrimary:   #F5F0E8;
+    --textSecondary: #A89880;
+    --textTertiary:  #5C4A30;
+    --textInverse:   #111008;
 
     /* ─── Borders ─────────────────────────────────────────────── */
-    --borderSubtle: rgba(245, 158, 11, 0.08);    /* barely-there dividers */
-    --borderDefault: rgba(245, 158, 11, 0.2);    /* standard borders */
-    --borderStrong: rgba(245, 158, 11, 0.38);    /* hover / focus borders */
-    --borderActive: rgba(245, 158, 11, 0.65);    /* active / selected borders */
+    --borderSubtle:  rgba(245, 158, 11, 0.08);
+    --borderDefault: rgba(245, 158, 11, 0.20);
+    --borderStrong:  rgba(245, 158, 11, 0.38);
+    --borderActive:  rgba(245, 158, 11, 0.65);
 
     /* ─── Shadows ─────────────────────────────────────────────── */
-    --shadow-soft-glass: 0 4px 30px rgba(0, 0, 0, 0.3);
-    --shadow-neon-glow:  0 0 10px rgba(245, 158, 11, 0.55),
-                         0 0 28px rgba(245, 158, 11, 0.25),
-                         0 0 60px rgba(234, 88, 12, 0.12);
-    --shadow-neon-subtle: 0 0 6px rgba(245, 158, 11, 0.4),
-                          0 0 16px rgba(245, 158, 11, 0.15);
-    --shadow-elevation: 0 10px 40px rgba(0, 0, 0, 0.65);
-    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.45),
-                   inset 0 1px 0 rgba(245, 158, 11, 0.08);
+    --shadow-soft-glass:  0 4px 30px rgba(0, 0, 0, 0.30);
+    --shadow-neon-glow:   0 0 10px rgba(245,158,11,0.55),
+                          0 0 28px rgba(245,158,11,0.25),
+                          0 0 60px rgba(234, 88,12,0.12);
+    --shadow-neon-subtle: 0 0  6px rgba(245,158,11,0.40),
+                          0 0 16px rgba(245,158,11,0.15);
+    --shadow-elevation:   0 10px 40px rgba(0,0,0,0.65);
+    --shadow-card:        0 2px 12px rgba(0,0,0,0.45),
+                          inset 0 1px 0 rgba(245,158,11,0.08);
 
-    /* ─── Status Colors (semantic) ────────────────────────────── */
+    /* ─── Status ──────────────────────────────────────────────── */
     --statusSuccess: #6EAF6E;
-    --statusWarning: #F59E0B;     /* shares primary intentionally */
-    --statusError: #EF4444;
-    --statusInfo: #6B9AC4;
+    --statusWarning: #F59E0B;
+    --statusError:   #EF4444;
+    --statusInfo:    #6B9AC4;
+
+    /* ─── Glass overlay tint ──────────────────────────────────── */
+    --glass-bg:     rgba(28, 24, 16, 0.65);
+    --glass-border: rgba(245, 158, 11, 0.12);
+
+    /* ─── Background grid color ───────────────────────────────── */
+    --grid-color:   rgba(245, 158, 11, 0.4);
+
+    /* ─── Radial glow colors for GlobalBackground ─────────────── */
+    --bg-glow-1: rgba(245, 158, 11, 0.07);
+    --bg-glow-2: rgba(234,  88, 12, 0.07);
+
+    /* ─── Code block bg ───────────────────────────────────────── */
+    --code-bg: #1e1e1e;
+    --code-line-bg: rgba(255,255,255,0.01);
+    --code-line-hover: rgba(255,255,255,0.05);
+  }
+
+  /* ═══════════════════════════════════════════════════════════════════
+     LIGHT THEME  (Warm Parchment)
+     Philosophy: keep amber identity, swap darks→warm creams, 
+     glows become warm ink shadows instead of neon halos
+  ═══════════════════════════════════════════════════════════════════ */
+  [data-theme="light"] {
+    /* ─── Backgrounds ──────────────────────────────────────────── */
+    --background:       #FDF6E8;   /* warm parchment */
+    --surface:          #F5EDD4;   /* aged paper */
+    --surface-elevated: #EDE1C4;   /* lifted card */
+    --surface-subtle:   #FAF2E0;   /* inset / code bg */
+
+    /* ─── Brand / Glow — amber stays amber ────────────────────── */
+    --primaryGlow:   #D97706;   /* slightly deeper amber for contrast */
+    --secondaryGlow: #C2410C;   /* deeper orange */
+    --accent:        #92400E;   /* dark burnt for subtle accents */
+
+    /* ─── Pipeline ────────────────────────────────────────────── */
+    --pipelineGlow:   #D97706;
+    --processingGlow: #C2410C;
+    --storageGlow:    #92400E;
+
+    /* ─── Contrast ────────────────────────────────────────────── */
+    --contrastGlow: #D97706;
+    --contrastSoft: #EDE1C4;
+
+    /* ─── Text ────────────────────────────────────────────────── */
+    --textPrimary:   #1C1000;   /* near-black with warm undertone */
+    --textSecondary: #6B4F2A;   /* warm mid-brown */
+    --textTertiary:  #A8895A;   /* faded ink */
+    --textInverse:   #FDF6E8;
+
+    /* ─── Borders ─────────────────────────────────────────────── */
+    --borderSubtle:  rgba(180, 120, 30, 0.12);
+    --borderDefault: rgba(180, 120, 30, 0.28);
+    --borderStrong:  rgba(180, 120, 30, 0.50);
+    --borderActive:  rgba(180, 120, 30, 0.80);
+
+    /* ─── Shadows — warm ink, no neon ─────────────────────────── */
+    --shadow-soft-glass:  0 4px 30px rgba(100, 60, 10, 0.12);
+    --shadow-neon-glow:   0 0 10px rgba(217,119, 6, 0.25),
+                          0 0 28px rgba(217,119, 6, 0.12),
+                          0 2px 12px rgba(100, 60, 10, 0.18);
+    --shadow-neon-subtle: 0 0  6px rgba(217,119, 6, 0.18),
+                          0 1px  8px rgba(100, 60, 10, 0.12);
+    --shadow-elevation:   0 8px 32px rgba(100, 60, 10, 0.14),
+                          0 2px  8px rgba(100, 60, 10, 0.08);
+    --shadow-card:        0 2px 12px rgba(100, 60, 10, 0.10),
+                          inset 0 1px 0 rgba(255, 255, 255, 0.60);
+
+    /* ─── Status ──────────────────────────────────────────────── */
+    --statusSuccess: #2D7A2D;
+    --statusWarning: #D97706;
+    --statusError:   #DC2626;
+    --statusInfo:    #2563EB;
+
+    /* ─── Glass ───────────────────────────────────────────────── */
+    --glass-bg:     rgba(253, 246, 232, 0.80);
+    --glass-border: rgba(180, 120, 30, 0.18);
+
+    /* ─── Background grid color ───────────────────────────────── */
+    --grid-color:   rgba(180, 120, 30, 0.25);
+
+    /* ─── Radial glow colors ──────────────────────────────────── */
+    --bg-glow-1: rgba(217, 119, 6, 0.06);
+    --bg-glow-2: rgba(194,  65,12, 0.05);
+
+    /* ─── Code block bg ───────────────────────────────────────── */
+    --code-bg: #F0E8D4;
+    --code-line-bg: rgba(0,0,0,0.015);
+    --code-line-hover: rgba(0,0,0,0.04);
+  }
+
+  /* ─── Smooth theme transition on EVERYTHING ──────────────────────── */
+  *,
+  *::before,
+  *::after {
+    transition:
+      background-color 0.35s ease,
+      border-color     0.35s ease,
+      color            0.25s ease,
+      box-shadow       0.35s ease,
+      opacity          0.25s ease;
+  }
+
+  /* But NOT layout/transform properties — keep animations snappy */
+  *[class*="animate"],
+  *[class*="motion"],
+  *[class*="transition-transform"] {
+    transition-property: transform, opacity !important;
   }
 
   body {
@@ -61,80 +173,64 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Scrollbar styled to match the ember theme */
-  ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--surface-subtle);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--contrastGlow);
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--primaryGlow);
-  }
+  ::-webkit-scrollbar        { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track  { background: var(--surface-subtle); }
+  ::-webkit-scrollbar-thumb  { background: var(--contrastGlow); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--primaryGlow); }
 
-  /* Selection highlight */
   ::selection {
-    background: rgba(245, 158, 11, 0.28);
+    background: rgba(217, 119, 6, 0.28);
     color: var(--textPrimary);
   }
 }
 
 @layer utilities {
   @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
   }
+
   /* ─── Glass Panels ──────────────────────────────────────────── */
   .glass-panel {
-    background: rgba(28, 24, 16, 0.65);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border: 1px solid var(--borderSubtle);
+    border: 1px solid var(--glass-border);
   }
 
   .glass-panel-bright {
-    background: rgba(37, 31, 20, 0.75);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--borderDefault);
   }
 
   /* ─── Glow Utilities ────────────────────────────────────────── */
-  .glow-primary {
-    box-shadow: var(--shadow-neon-subtle);
-  }
-
-  .glow-primary-strong {
-    box-shadow: var(--shadow-neon-glow);
-  }
+  .glow-primary        { box-shadow: var(--shadow-neon-subtle); }
+  .glow-primary-strong { box-shadow: var(--shadow-neon-glow); }
 
   .text-glow {
-    text-shadow: 0 0 12px rgba(245, 158, 11, 0.7),
-                 0 0 30px rgba(245, 158, 11, 0.3),
-                 0 0 60px rgba(234, 88, 12, 0.15);
+    text-shadow: 0 0 12px rgba(217,119,6,0.55),
+                 0 0 30px rgba(217,119,6,0.25),
+                 0 0 60px rgba(194,65,12,0.12);
   }
 
-  .text-glow-subtle {
-    text-shadow: 0 0 8px rgba(245, 158, 11, 0.45);
-  }
+  .text-glow-subtle { text-shadow: 0 0 8px rgba(217,119,6,0.40); }
 
   /* ─── Borders ───────────────────────────────────────────────── */
-  .border-ember {
-    border: 1px solid var(--borderDefault);
-  }
-
-  .border-ember-strong {
-    border: 1px solid var(--borderStrong);
-  }
+  .border-ember        { border: 1px solid var(--borderDefault); }
+  .border-ember-strong { border: 1px solid var(--borderStrong); }
 
   /* ─── Gradient Text ─────────────────────────────────────────── */
   .gradient-text {
     background: linear-gradient(135deg, #F59E0B 0%, #EA580C 55%, #FDE68A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  [data-theme="light"] .gradient-text {
+    background: linear-gradient(135deg, #D97706 0%, #C2410C 55%, #92400E 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -148,24 +244,15 @@
   }
 
   /* ─── Surface Utilities ─────────────────────────────────────── */
-  .surface {
-    background-color: var(--surface);
-  }
-
-  .surface-elevated {
-    background-color: var(--surface-elevated);
-  }
-
-  .surface-subtle {
-    background-color: var(--surface-subtle);
-  }
+  .surface          { background-color: var(--surface); }
+  .surface-elevated { background-color: var(--surface-elevated); }
+  .surface-subtle   { background-color: var(--surface-subtle); }
 
   /* ─── Ember Gradient Backgrounds ───────────────────────────── */
   .bg-ember-glow {
     background: radial-gradient(
       ellipse at 50% 0%,
-      rgba(245, 158, 11, 0.1) 0%,
-      rgba(234, 88, 12, 0.04) 40%,
+      var(--bg-glow-1) 0%,
       transparent 70%
     );
   }
@@ -173,31 +260,77 @@
   .bg-ember-spot {
     background: radial-gradient(
       circle at center,
-      rgba(245, 158, 11, 0.14) 0%,
-      rgba(234, 88, 12, 0.06) 40%,
+      var(--bg-glow-1) 0%,
       transparent 65%
     );
   }
 
-  /* ─── Pipeline node colors (for architecture/diagram pages) ── */
-  .node-pipeline {
-    border-color: var(--pipelineGlow);
-    box-shadow: 0 0 8px rgba(245, 158, 11, 0.35);
-  }
-
-  .node-processing {
-    border-color: var(--processingGlow);
-    box-shadow: 0 0 8px rgba(234, 88, 12, 0.35);
-  }
-
-  .node-storage {
-    border-color: var(--storageGlow);
-    box-shadow: 0 0 8px rgba(253, 230, 138, 0.25);
-  }
+  /* ─── Pipeline node colors ──────────────────────────────────── */
+  .node-pipeline   { border-color: var(--pipelineGlow);   box-shadow: 0 0 8px rgba(217,119,6,0.35); }
+  .node-processing { border-color: var(--processingGlow); box-shadow: 0 0 8px rgba(194,65,12,0.35); }
+  .node-storage    { border-color: var(--storageGlow);    box-shadow: 0 0 8px rgba(146,64,14,0.25); }
 
   /* ─── Focus ring ────────────────────────────────────────────── */
   .focus-ember:focus-visible {
     outline: 2px solid var(--primaryGlow);
     outline-offset: 2px;
   }
+
+  /* ─── Light mode: Tailwind bg-surface/60 override ───────────── */
+  /* GlassCard uses bg-surface/60 which Tailwind bakes — override: */
+  [data-theme="light"] .bg-surface\/60 {
+    background-color: rgba(245, 237, 212, 0.80) !important;
+  }
+  [data-theme="light"] .bg-surface\/40 {
+    background-color: rgba(245, 237, 212, 0.60) !important;
+  }
+  [data-theme="light"] .bg-surface\/30 {
+    background-color: rgba(245, 237, 212, 0.50) !important;
+  }
+  [data-theme="light"] .bg-surface\/20 {
+    background-color: rgba(245, 237, 212, 0.35) !important;
+  }
+
+  /* ─── Light mode: background override ───────────────────────── */
+  [data-theme="light"] .bg-background {
+    background-color: var(--background) !important;
+  }
+
+  /* ─── Light mode: code block overrides ─────────────────────── */
+  [data-theme="light"] .bg-\[#1e1e1e\] {
+    background-color: var(--code-bg) !important;
+  }
+  [data-theme="light"] .bg-\[#0d0f08\] {
+    background-color: #F0E8D4 !important;
+  }
+  [data-theme="light"] .bg-\[#0E0C06\] {
+    background-color: #FAF2E0 !important;
+  }
+  [data-theme="light"] .bg-black\/60,
+  [data-theme="light"] .bg-black\/70,
+  [data-theme="light"] .bg-black\/30,
+  [data-theme="light"] .bg-black\/40 {
+    background-color: rgba(245, 237, 212, 0.85) !important;
+  }
+
+  /* ─── Light mode: white/x opacity borders ───────────────────── */
+  [data-theme="light"] .border-white\/10 { border-color: rgba(180,120,30,0.18) !important; }
+  [data-theme="light"] .border-white\/5  { border-color: rgba(180,120,30,0.10) !important; }
+  [data-theme="light"] .border-white\/8  { border-color: rgba(180,120,30,0.14) !important; }
+
+  /* ─── Light mode: white/x opacity backgrounds ───────────────── */
+  [data-theme="light"] .bg-white\/5  { background-color: rgba(180,120,30,0.06) !important; }
+  [data-theme="light"] .bg-white\/4  { background-color: rgba(180,120,30,0.04) !important; }
+  [data-theme="light"] .hover\:bg-white\/5:hover  { background-color: rgba(180,120,30,0.08) !important; }
+  [data-theme="light"] .hover\:bg-white\/4:hover  { background-color: rgba(180,120,30,0.06) !important; }
+  [data-theme="light"] .hover\:bg-white\/8:hover  { background-color: rgba(180,120,30,0.10) !important; }
+
+  /* ─── Light mode: text-white overrides ──────────────────────── */
+  [data-theme="light"] .text-white     { color: var(--textPrimary) !important; }
+  [data-theme="light"] .text-white\/80 { color: rgba(28,16,0,0.80) !important; }
+  [data-theme="light"] .text-white\/75 { color: rgba(28,16,0,0.75) !important; }
+  [data-theme="light"] .text-white\/90 { color: rgba(28,16,0,0.90) !important; }
+
+  /* ─── Light mode: green-400 in code output ───────────────────── */
+  [data-theme="light"] .text-green-400\/80 { color: #2D7A2D !important; }
 }

@@ -5,8 +5,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { GlassCard } from '@/components/ui/GlassCard';
-import { Database, Terminal, Cpu, Network, User, Mail } from 'lucide-react';
+import { Database, Terminal, Cpu, Network, User, Mail, GitBranch } from 'lucide-react';
 import { CommandPaletteTrigger } from '@/components/CommandPalette';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { meta } from '@/data/meta';
 
 export function Navbar() {
@@ -76,8 +77,9 @@ export function Navbar() {
             })}
           </div>
 
-          {/* Right: ⌘K */}
-          <div className="shrink-0 ml-3">
+          {/* Right: theme toggle + ⌘K */}
+          <div className="shrink-0 ml-3 flex items-center gap-2">
+            <ThemeToggle />
             <CommandPaletteTrigger />
           </div>
         </GlassCard>

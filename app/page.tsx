@@ -6,7 +6,7 @@ import { BootSequence } from '@/components/BootSequence';
 import { Button } from '@/components/ui/Button';
 import { PipelineNode } from '@/components/ui/PipelineNode';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
-import { Database, Server, Cloud, Activity, Download, Network, Cpu, Terminal, User, Mail } from 'lucide-react';
+import { Database, Server, Cloud, Activity, Network, Cpu, Terminal, User, Mail, GitBranch } from 'lucide-react';
 import Link from 'next/link';
 import { hero } from '@/data/hero';
 import { links } from '@/data/links';
@@ -125,11 +125,11 @@ export default function Home() {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <a href={links.resume} download>
+            <Link href="/resume">
               <Button size="lg" variant="primary" className="shadow-neon-glow border border-primaryGlow/50 flex items-center gap-2">
-                <Download className="w-5 h-5" /> {hero.ctas.resume}
+                <GitBranch className="w-5 h-5" /> Pipeline Resume
               </Button>
-            </a>
+            </Link>
             <Link href="/projects" className="hidden md:block">
               <Button size="lg" variant="outline">{hero.ctas.exploreProjects}</Button>
             </Link>

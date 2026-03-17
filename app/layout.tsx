@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { CommandPalette } from "@/components/CommandPalette";
 import { PageTransition } from "@/components/PageTransition";
 import { ScrollToTop } from "@/components/ScrollToTop";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { meta } from "@/data/meta";
 import "./globals.css";
 
@@ -43,16 +44,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark" data-theme="dark">
       <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} antialiased bg-background text-textPrimary selection:bg-primaryGlow/30`}>
-        <GlobalBackground />
-        <CommandPalette />
-        <Navbar />
-        <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
-          <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-        <ScrollToTop />
+        <ThemeProvider>
+          <GlobalBackground />
+          <CommandPalette />
+          <Navbar />
+          <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
+            <PageTransition>{children}</PageTransition>
+          </main>
+          <Footer />
+          <ScrollToTop />
+        </ThemeProvider>
       </body>
     </html>
   );

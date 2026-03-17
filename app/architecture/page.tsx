@@ -232,18 +232,15 @@ for cfg_file in Path("dag_configs").glob("*.yaml"):
 
 export default function ArchitectureLab() {
   const [activePattern, setActivePattern] = useState<PatternId>('dbt-incremental');
-  const [runState, setRunState] = useState<'idle' | 'running' | 'done'>('idle');
-  const [showOutput, setShowOutput] = useState(false);
+  const [runState,      setRunState]      = useState<'idle' | 'running' | 'done'>('idle');
+  const [showOutput,    setShowOutput]    = useState(false);
 
   const currentPattern = patterns.find(p => p.id === activePattern) || patterns[0];
 
   const handleRun = () => {
     setShowOutput(false);
     setRunState('running');
-    setTimeout(() => {
-      setRunState('done');
-      setShowOutput(true);
-    }, 1200);
+    setTimeout(() => { setRunState('done'); setShowOutput(true); }, 1200);
   };
 
   const handlePatternChange = (id: PatternId) => {
@@ -265,7 +262,7 @@ export default function ArchitectureLab() {
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 flex-1 w-full">
 
-        {/* Left: Pattern list */}
+        {/* Left: pattern list */}
         <div className="w-full lg:w-1/3 flex flex-col gap-4">
           <h3 className="text-sm font-mono uppercase tracking-widest text-textSecondary border-b border-white/10 pb-2 mb-2 flex items-center gap-2">
             <Cog className="w-4 h-4" /> Engineering Patterns
@@ -281,15 +278,16 @@ export default function ArchitectureLab() {
                   className={`p-4 cursor-pointer transition-all duration-300 border-l-4 ${
                     isActive
                       ? 'border-l-primaryGlow bg-primaryGlow/5'
-                      : 'border-l-transparent hover:border-l-white/20 hover:bg-white/5'
+                      : 'border-l-transparent hover:border-l-white/20'
                   }`}
                 >
                   <div className="flex items-start gap-3">
-                    <div className={`p-2 rounded-lg mt-0.5 ${isActive ? 'bg-primaryGlow/20 text-primaryGlow' : 'bg-surface text-textSecondary'}`}>
+                    <div className={`p-2 rounded-lg mt-0.5 ${isActive ? 'bg-primaryGlow/20 text-primaryGlow' : 'text-textSecondary'}`}
+                      style={{ backgroundColor: isActive ? undefined : 'var(--surface)' }}>
                       {pattern.icon}
                     </div>
                     <div>
-                      <h4 className={`font-bold font-heading text-sm md:text-base mb-1 ${isActive ? 'text-white' : 'text-white/80'}`}>
+                      <h4 className={`font-bold font-heading text-sm md:text-base mb-1 ${isActive ? 'text-textPrimary' : 'text-textPrimary/80'}`}>
                         {pattern.title}
                       </h4>
                       <p className="text-xs text-textSecondary line-clamp-2">{pattern.description}</p>
@@ -305,30 +303,38 @@ export default function ArchitectureLab() {
         <div className="w-full lg:w-2/3 flex flex-col gap-4 mt-8 lg:mt-0">
 
           {/* IDE */}
-          <GlassCard className="p-0 flex flex-col overflow-hidden border-white/10" style={{ height: showOutput ? '340px' : '500px', transition: 'height 0.3s ease' }}>
-            <div className="bg-[#1e1e1e] px-4 py-3 border-b border-white/5 flex items-center justify-between shrink-0">
+          <GlassCard
+            className="p-0 flex flex-col overflow-hidden"
+            style={{ height: showOutput ? '340px' : '500px', transition: 'height 0.3s ease' }}
+          >
+            {/* Title bar */}
+            <div className="px-4 py-3 border-b flex items-center justify-between shrink-0"
+              style={{ backgroundColor: 'var(--surface-elevated)', borderColor: 'var(--borderSubtle)' }}>
               <div className="flex items-center gap-4">
                 <div className="flex gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80" />
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                  <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: 'var(--primaryGlow)', opacity: 0.8 }} />
                 </div>
-                <div className="flex items-center gap-2 bg-[#2d2d2d] px-3 py-1 rounded-md border border-white/5">
+                <div className="flex items-center gap-2 px-3 py-1 rounded-md border"
+                  style={{ backgroundColor: 'var(--surface)', borderColor: 'var(--borderSubtle)' }}>
                   <Code2 className="w-4 h-4 text-primaryGlow" />
-                  <span className="text-xs font-mono text-white/80">
+                  <span className="text-xs font-mono text-textPrimary/80">
                     {currentPattern.language === 'python' ? 'pipeline.py' : 'model.sql'}
                   </span>
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="hidden md:block text-xs font-mono text-textSecondary uppercase bg-white/5 px-2 py-1 rounded">{currentPattern.language}</span>
+                <span className="hidden md:block text-xs font-mono text-textSecondary uppercase px-2 py-1 rounded"
+                  style={{ backgroundColor: 'var(--surface)' }}>{currentPattern.language}</span>
                 <button
                   onClick={handleRun}
                   disabled={runState === 'running'}
                   className="flex items-center gap-1.5 text-xs font-mono px-3 py-1.5 rounded-md bg-primaryGlow/15 text-primaryGlow border border-primaryGlow/30 hover:bg-primaryGlow/25 transition-all disabled:opacity-50"
                 >
                   {runState === 'running' ? (
-                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }} className="w-3 h-3 border border-primaryGlow border-t-transparent rounded-full" />
+                    <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 0.8, ease: 'linear' }}
+                      className="w-3 h-3 border border-primaryGlow border-t-transparent rounded-full" />
                   ) : runState === 'done' ? (
                     <CheckCircle2 className="w-3 h-3" />
                   ) : (
@@ -339,23 +345,33 @@ export default function ArchitectureLab() {
               </div>
             </div>
 
-            <div className="flex-1 overflow-auto bg-[#1e1e1e] relative">
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:100%_24px] pointer-events-none" />
+            {/* Code area */}
+            <div className="flex-1 overflow-auto relative" style={{ backgroundColor: 'var(--code-bg)' }}>
+              <div className="absolute inset-0 pointer-events-none"
+                style={{ backgroundImage: 'linear-gradient(var(--code-line-bg) 1px, transparent 1px)', backgroundSize: '100% 24px' }} />
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentPattern.id}
                   initial={{ opacity: 0, x: 10 }}
                   animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
+                  exit={{   opacity: 0, x: -10 }}
                   transition={{ duration: 0.2 }}
                   className="p-6 font-mono text-sm leading-relaxed"
                 >
-                  <pre className="text-white/90 whitespace-pre-wrap break-words">
+                  <pre className="text-textPrimary/90 whitespace-pre-wrap break-words">
                     <code>
                       {currentPattern.code.split('\n').map((line, i) => (
-                        <div key={i} className="flex hover:bg-white/5 rounded px-2 -mx-2 transition-colors group/line">
-                          <span className="w-8 shrink-0 text-white/20 select-none text-right pr-4 border-r border-white/5 mr-4 group-hover/line:text-white/40">{i + 1}</span>
-                          <span className="flex-1 overflow-x-auto no-scrollbar" style={{ color: getSyntaxColor(line, currentPattern.language) }}>
+                        <div key={i} className="flex rounded px-2 -mx-2 transition-colors group/line"
+                          style={{ ':hover': { backgroundColor: 'var(--code-line-hover)' } } as React.CSSProperties}
+                          onMouseEnter={e => (e.currentTarget.style.backgroundColor = 'var(--code-line-hover)')}
+                          onMouseLeave={e => (e.currentTarget.style.backgroundColor = '')}
+                        >
+                          <span className="w-8 shrink-0 text-textTertiary select-none text-right pr-4 border-r mr-4"
+                            style={{ borderColor: 'var(--borderSubtle)' }}>
+                            {i + 1}
+                          </span>
+                          <span className="flex-1 overflow-x-auto no-scrollbar"
+                            style={{ color: getSyntaxColor(line, currentPattern.language) }}>
                             {line || ' '}
                           </span>
                         </div>
@@ -373,25 +389,26 @@ export default function ArchitectureLab() {
               <motion.div
                 initial={{ opacity: 0, y: 10, height: 0 }}
                 animate={{ opacity: 1, y: 0, height: 'auto' }}
-                exit={{ opacity: 0, y: -10, height: 0 }}
+                exit={{   opacity: 0, y: -10, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
                 <GlassCard className="p-0 overflow-hidden border-primaryGlow/20">
-                  <div className="bg-black/70 px-4 py-2.5 border-b border-white/5 flex items-center gap-2">
+                  <div className="px-4 py-2.5 border-b flex items-center gap-2"
+                    style={{ backgroundColor: 'var(--surface-elevated)', borderColor: 'var(--borderSubtle)' }}>
                     <Terminal className="w-3.5 h-3.5 text-primaryGlow" />
                     <span className="text-xs font-mono text-textSecondary uppercase tracking-wider">Output</span>
                     <span className="ml-auto text-xs font-mono text-statusSuccess flex items-center gap-1">
                       <CheckCircle2 className="w-3 h-3" /> exit 0
                     </span>
                   </div>
-                  <div className="bg-[#0d0f08] p-4 font-mono text-xs text-green-400/80 leading-relaxed whitespace-pre overflow-x-auto">
+                  <div className="p-4 font-mono text-xs leading-relaxed whitespace-pre overflow-x-auto"
+                    style={{ backgroundColor: 'var(--surface-subtle)', color: 'var(--statusSuccess)' }}>
                     {currentPattern.mockOutput}
                   </div>
                 </GlassCard>
               </motion.div>
             )}
           </AnimatePresence>
-
         </div>
       </div>
     </div>
@@ -401,17 +418,17 @@ export default function ArchitectureLab() {
 function getSyntaxColor(line: string, lang: string): string {
   const code = line.trim();
   if (lang === 'python') {
-    if (code.startsWith('#')) return '#6A9955';
-    if (code.startsWith('import ') || code.startsWith('from ')) return '#C586C0';
+    if (code.startsWith('#'))                                         return '#6A9955';
+    if (code.startsWith('import ') || code.startsWith('from '))      return '#C586C0';
     if (/^(def |class |if |for |return |with |async |await )/.test(code)) return '#569CD6';
     if (code.includes('"""') || code.includes("'''") || (code.includes("'") && !code.startsWith('['))) return '#CE9178';
-    if (/^\s*\w+\s*=/.test(code)) return '#9CDCFE';
-    return '#D4D4D4';
+    if (/^\s*\w+\s*=/.test(code))                                    return '#9CDCFE';
+    return 'var(--textPrimary)';
   }
-  if (code.startsWith('--') || code.startsWith('#')) return '#6A9955';
-  if (code.startsWith('import ') || code.startsWith('from ')) return '#C586C0';
+  if (code.startsWith('--') || code.startsWith('#'))                 return '#6A9955';
+  if (code.startsWith('import ') || code.startsWith('from '))        return '#C586C0';
   if (/SELECT|FROM|WHERE|GROUP BY|ORDER BY|CREATE|INSERT|WITH|JOIN|ON|AS|TABLE|IF/.test(code)) return '#569CD6';
-  if (code.includes('{%') || code.includes('{{')) return '#D16969';
-  if (code.includes("'") || code.includes('"')) return '#CE9178';
-  return '#D4D4D4';
+  if (code.includes('{%') || code.includes('{{'))                    return '#D16969';
+  if (code.includes("'") || code.includes('"'))                      return '#CE9178';
+  return 'var(--textPrimary)';
 }
