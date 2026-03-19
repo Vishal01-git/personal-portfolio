@@ -99,9 +99,13 @@ function SkillRow({ skill, isActive, onClick, index, inView }: {
       onClick={onClick}
       className={`group flex items-center gap-4 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 border ${
         isActive
-          ? 'bg-primaryGlow/8 border-primaryGlow/25'
-          : 'bg-transparent border-transparent hover:bg-white/4 hover:border-white/8'
+          ? ''
+          : 'bg-transparent border-transparent hover:bg-white/5 hover:border-white/10'
       }`}
+      style={isActive ? {
+        background: 'rgba(217,119,6,0.08)',
+        border: '1px solid rgba(217,119,6,0.25)',
+      } : {}}
     >
       <div className={`shrink-0 transition-colors duration-200 ${iconColor}`}>
         {ICON_MAP[skill.id] ?? <Database className="w-6 h-6" />}
@@ -148,14 +152,19 @@ export default function SkillsPage() {
 
   const active    = skills.find(s => s.id === activeSkillId) || skills[0];
   const color     = active.color as 'primary' | 'secondary' | 'accent';
-  const iconBg    =
-    color === 'primary'   ? 'bg-primaryGlow/15 text-primaryGlow' :
-    color === 'secondary' ? 'bg-secondaryGlow/15 text-secondaryGlow' :
-                            'bg-accent/15 text-accent';
-  const tierBadge =
-    active.tier === 'core'
-      ? 'border-primaryGlow/30 text-primaryGlow bg-primaryGlow/8'
-      : 'border-white/15 text-textSecondary';
+  const iconBg =
+    color === 'primary'   ? 'bg-primaryGlow/10 text-primaryGlow' :
+    color === 'secondary' ? 'bg-secondaryGlow/10 text-secondaryGlow' :
+                            'bg-accent/10 text-accent';
+  const isCore = active.tier === 'core';
+  const tierBadgeStyle = isCore ? {
+    borderColor: 'rgba(217,119,6,0.30)',
+    color: 'var(--primaryGlow)',
+    background: 'rgba(217,119,6,0.08)',
+  } : {
+    borderColor: 'rgba(255,255,255,0.10)',
+    color: 'var(--textSecondary)',
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-6 flex flex-col items-center pb-20">
@@ -305,7 +314,10 @@ export default function SkillsPage() {
                           </div>
                           <div className="flex flex-col items-end gap-1.5">
                             <Badge variant="outline" className="text-[10px]">{active.exp}</Badge>
-                            <span className={`text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border ${tierBadge}`}>
+                            <span 
+                              className="text-[10px] font-mono uppercase tracking-wider px-2 py-0.5 rounded-full border"
+                              style={tierBadgeStyle}
+                            >
                               {active.tier}
                             </span>
                           </div>

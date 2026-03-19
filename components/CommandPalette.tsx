@@ -9,6 +9,28 @@ import { links } from '@/data/links';
 const RECENT_KEY = 'cmd_palette_recent';
 const MAX_RECENT = 4;
 
+const CommandPaletteContext = React.createContext<{ open: () => void }>({ open: () => {} });
+export function useCommandPalette() { return React.useContext(CommandPaletteContext); }
+
+export function CommandPaletteProvider({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [query, setQuery] = useState('');
+  const [selected, setSelected] = useState(0);
+
+  const open = useCallback(() => {
+    setIsOpen(true);
+    setQuery('');
+    setSelected(0);
+  }, []);
+
+  return (
+    <CommandPaletteContext.Provider value={{ open }}>
+      {children}
+      <CommandPalette isOpen={isOpen} setIsOpen={setIsOpen} query={query} setQuery={setQuery} selected={selected} setSelected={setSelected} />
+    </CommandPaletteContext.Provider>
+  );
+}
+
 const COMMANDS = [
   { id: 'home',         label: 'Home',              sublabel: 'Hero & pipeline overview',   href: '/',               icon: <Hash className="w-4 h-4" />,       category: 'Pages' },
   { id: 'architecture', label: 'Architecture Lab',  sublabel: 'Code patterns & dry runs',  href: '/architecture',   icon: <Network className="w-4 h-4" />,    category: 'Pages' },
@@ -46,28 +68,31 @@ function pushRecent(id: string) {
   } catch {}
 }
 
-export function CommandPalette() {
-  const [open,     setOpen]     = useState(false);
-  const [query,    setQuery]    = useState('');
-  const [selected, setSelected] = useState(0);
+export function CommandPalette({ 
+  isOpen, setIsOpen, query, setQuery, selected, setSelected 
+}: { 
+  isOpen: boolean; setIsOpen: (v: boolean) => void; 
+  query: string; setQuery: (v: string) => void;
+  selected: number; setSelected: (v: React.SetStateAction<number>) => void;
+}) {
   const [recent,   setRecent]   = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const router   = useRouter();
 
-  useEffect(() => { if (open) setRecent(getRecent()); }, [open]);
+  useEffect(() => { if (isOpen) setRecent(getRecent()); }, [isOpen]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault(); setOpen(p => !p); setQuery(''); setSelected(0);
+        e.preventDefault(); setIsOpen(!isOpen); setQuery(''); setSelected(0);
       }
-      if (e.key === 'Escape') setOpen(false);
+      if (e.key === 'Escape') setIsOpen(false);
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, []);
+  }, [isOpen, setIsOpen, setQuery, setSelected]);
 
-  useEffect(() => { if (open) setTimeout(() => inputRef.current?.focus(), 50); }, [open]);
+  useEffect(() => { if (isOpen) setTimeout(() => inputRef.current?.focus(), 50); }, [isOpen]);
 
   const results    = COMMANDS.filter(c => fuzzyMatch(query, c.label) || fuzzyMatch(query, c.sublabel));
   const recentCmds = !query ? recent.map(id => COMMANDS.find(c => c.id === id)).filter(Boolean) as typeof COMMANDS : [];
@@ -78,7 +103,7 @@ export function CommandPalette() {
 
   const navigate = useCallback((cmd: typeof COMMANDS[0]) => {
     pushRecent(cmd.id);
-    setOpen(false); setQuery('');
+    setIsOpen(false); setQuery('');
     if (cmd.href.startsWith('http') || cmd.href.startsWith('/resume.pdf')) {
       window.open(cmd.href, '_blank');
     } else {
@@ -100,10 +125,10 @@ export function CommandPalette() {
 
   return (
     <AnimatePresence>
-      {open && (
+      {isOpen && (
         <>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm" onClick={() => setOpen(false)} />
+            className="fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
 
           <motion.div initial={{ opacity: 0, scale: 0.96, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -8 }} transition={{ duration: 0.18, ease: 'easeOut' }}
@@ -179,9 +204,10 @@ function CommandRow({ cmd, isSelected, onHover, onClick }: { cmd: typeof COMMAND
 }
 
 export function CommandPaletteTrigger() {
+  const { open } = useCommandPalette();
   return (
     <button
-      onClick={() => window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true, bubbles: true }))}
+      onClick={open}
       className="hidden md:flex items-center gap-2 text-xs font-mono text-textSecondary bg-white/5 hover:bg-white/8 border border-white/10 hover:border-primaryGlow/30 px-3 py-1.5 rounded-lg transition-all"
     >
       <Search className="w-3 h-3" />

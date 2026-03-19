@@ -232,7 +232,7 @@ export function CoreFundamentals() {
         <div
           className="p-4 md:p-5 flex flex-col gap-3"
           // The right panel keeps a deliberately darker bg for terminal feel
-          style={{ background: 'rgba(0,0,0,0.25)' }}
+          style={{ background: 'var(--surface-subtle)', opacity: 0.95 }}
         >
           {fundamentals.processes.map((proc, procIdx) => (
             <ProcessCard

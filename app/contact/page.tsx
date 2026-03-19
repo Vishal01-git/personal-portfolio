@@ -47,6 +47,11 @@ export default function ContactPage() {
               <span className="font-mono text-xs text-textSecondary uppercase tracking-widest pl-2">POST /api/contact</span>
             </div>
 
+            <style>{`
+              .contact-input::placeholder { color: var(--textTertiary); opacity: 0.7; }
+              .contact-input:focus { border-color: var(--borderActive) !important; box-shadow: 0 0 0 1px var(--borderActive); }
+            `}</style>
+
             <form onSubmit={handleSubmit} className="p-6 md:p-8 space-y-6">
               {[
                 { name: 'name',    type: 'text',  label: 'payload.name',    placeholder: 'Enter your name...'    },
@@ -57,7 +62,12 @@ export default function ContactPage() {
                     <Terminal className="w-3 h-3" /> {f.label}
                   </label>
                   <input required name={f.name} type={f.type} placeholder={f.placeholder}
-                    className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-textPrimary focus:outline-none focus:border-primaryGlow/50 focus:ring-1 focus:ring-primaryGlow/50 transition-all placeholder:text-white/20"
+                    className="w-full contact-input rounded-lg px-4 py-3 font-mono text-sm focus:outline-none transition-all"
+                    style={{
+                      background: 'var(--surface)',
+                      border: '1px solid var(--borderDefault)',
+                      color: 'var(--textPrimary)',
+                    }}
                   />
                 </div>
               ))}
@@ -67,7 +77,12 @@ export default function ContactPage() {
                   <Terminal className="w-3 h-3" /> payload.message
                 </label>
                 <textarea required name="message" rows={4} placeholder="Enter message body..."
-                  className="w-full bg-black/40 border border-white/10 rounded-lg px-4 py-3 font-mono text-sm text-textPrimary focus:outline-none focus:border-primaryGlow/50 focus:ring-1 focus:ring-primaryGlow/50 transition-all resize-none placeholder:text-white/20"
+                  className="w-full contact-input rounded-lg px-4 py-3 font-mono text-sm focus:outline-none transition-all resize-none"
+                  style={{
+                    background: 'var(--surface)',
+                    border: '1px solid var(--borderDefault)',
+                    color: 'var(--textPrimary)',
+                  }}
                 />
               </div>
 

@@ -26,6 +26,12 @@ const config: Config = {
         statusError: "var(--statusError)",
         statusWarning: "var(--statusWarning)",
         statusInfo: "var(--statusInfo)",
+        surfaceElevated: "var(--surface-elevated)",
+        surfaceSubtle:   "var(--surface-subtle)",
+        borderSubtle:    "var(--borderSubtle)",
+        borderDefault:   "var(--borderDefault)",
+        borderStrong:    "var(--borderStrong)",
+        borderActive:    "var(--borderActive)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
