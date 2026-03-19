@@ -174,11 +174,11 @@ export default function SkillsPage() {
         <h1 className="text-4xl md:text-5xl font-bold font-heading">
           Technical{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">
-            Infrastructure
+            Expertise
           </span>
         </h1>
         <p className="text-textSecondary max-w-2xl mx-auto">
-          Skills ranked by depth and daily use — not just a logo parade.
+          The core technologies, languages, and frameworks I use to design and deploy modern data architectures.
         </p>
         <div className="flex items-center justify-center pt-2">
           <div

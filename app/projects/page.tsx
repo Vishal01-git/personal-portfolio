@@ -437,13 +437,13 @@ export default function ProjectsPage() {
     <div className="max-w-6xl mx-auto px-6 pt-10 pb-20">
       <div className="text-center mb-16 space-y-4">
         <h1 className="text-4xl md:text-5xl font-bold font-heading">
-          Production{' '}
+          Featured{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">
-            Deployments
+            Projects
           </span>
         </h1>
         <p className="text-textSecondary max-w-2xl mx-auto">
-          Scalable architectures with full data lineage — from raw source to BI output.
+          End-to-end data engineering builds highlighting my approach to architecture, performance optimization, and automation.
         </p>
       </div>
 

@@ -222,13 +222,13 @@ export default function ExperiencePage() {
           career_pipeline.yml · {workExperiences.length} runs · 0 errors
         </div>
         <h1 className="text-4xl md:text-5xl font-bold font-heading">
-          Execution{' '}
+          Professional{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">
-            History
+            Experience
           </span>
         </h1>
         <p className="text-textSecondary max-w-xl mx-auto text-sm md:text-base">
-          Career mapped as a sequential pipeline — each role a transformation stage with measurable output.
+          My track record of building data solutions, optimizing cloud infrastructure, and driving engineering excellence.
         </p>
       </div>
 
