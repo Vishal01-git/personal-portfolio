@@ -18,5 +18,5 @@ export const meta = {
   title:       "Vishal Prajapati — Data Engineer",
   description: "Data Engineer specializing in scalable pipelines, dbt, Airflow, and AWS. Architecture Lab, projects, and more.",
   ogDescription: "Scalable data pipelines · dbt · Airflow · AWS · Architecture Lab",
-  ogImage:     "/og-image.png",
+  ogImage:     "/opengraph-image.png",
 };
