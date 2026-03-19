@@ -262,7 +262,6 @@ export function SkillGraph() {
   const [hoverId,    setHoverId]    = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [appeared,   setAppeared]   = useState(false);
-  const [isLightMode, setIsLightMode] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const inView = useInView(containerRef, { once: true, margin: '-80px' });
@@ -270,16 +269,6 @@ export function SkillGraph() {
   useEffect(() => {
     if (inView) { const t = setTimeout(() => setAppeared(true), 100); return () => clearTimeout(t); }
   }, [inView]);
-
-  useEffect(() => {
-    const checkTheme = () => {
-      setIsLightMode(document.documentElement.getAttribute('data-theme') === 'light');
-    };
-    checkTheme();
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
 
   const adj       = useMemo(() => buildAdj(), []);
   const activeId  = hoverId || selectedId;
@@ -331,7 +320,7 @@ export function SkillGraph() {
           <div
             className="absolute inset-0 rounded-2xl"
             style={{
-              background: isLightMode ? 'rgba(0,0,0,0)' : 'linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 100%)',
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 100%)',
               pointerEvents: 'none',
             }}
           />
@@ -542,7 +531,7 @@ export function SkillGraph() {
                   {/* Icon */}
                   <g 
                     transform={`translate(${node.x - (node.type === 'center' ? 18 : node.type === 'category' ? 12 : 10)}, ${node.y - (node.type === 'center' ? 18 : node.type === 'category' ? 12 : 10)})`}
-                    style={{ pointerEvents: 'none', color: isLightMode && !active && !isConn ? 'var(--textPrimary)' : col }}
+                    style={{ pointerEvents: 'none', color: col }}
                   >
                     <node.icon size={node.type === 'center' ? 36 : node.type === 'category' ? 24 : 20} />
                   </g>

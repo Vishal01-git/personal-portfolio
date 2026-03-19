@@ -1,108 +1,357 @@
 "use client";
 
-import React from 'react';
-import { GlassCard } from '@/components/ui/GlassCard';
+import React, { useState, useRef } from 'react';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { DataFlowAnimation } from '@/components/ui/DataFlowAnimation';
-import { Briefcase, Calendar, Code, Target, GraduationCap, BookOpen } from 'lucide-react';
+import { GraduationCap, ChevronRight, Terminal, Clock, CheckCircle2, Zap, BookOpen } from 'lucide-react';
 import { experiences } from '@/data/experience';
 
-export default function ExperiencePage() {
-  // Split work vs education
-  const workExperiences = experiences.filter(e => e.type !== 'education');
-  const education = experiences.find(e => e.type === 'education');
+// ── Status config per experience type ─────────────────────────────────────
+const STATUS = {
+  work:      { label: 'ACTIVE',    color: 'var(--statusSuccess)', pulse: true  },
+  education: { label: 'COMPLETE',  color: 'var(--textTertiary)',  pulse: false },
+};
+
+// ── Layer badge — maps work index to pipeline stage ───────────────────────
+const PIPELINE_STAGES = ['STAGING', 'TRANSFORM', 'MART'];
+const STAGE_COLORS    = [
+  { color: '#F59E0B', bg: 'rgba(245,158,11,0.10)', border: 'rgba(245,158,11,0.28)' },
+  { color: '#EA580C', bg: 'rgba(234,88,12,0.10)',  border: 'rgba(234,88,12,0.28)'  },
+  { color: '#6EAF6E', bg: 'rgba(110,175,110,0.10)',border: 'rgba(110,175,110,0.28)'},
+];
+
+// ── Log line component ─────────────────────────────────────────────────────
+function LogLine({ text, index, active }: { text: string; index: number; active: boolean }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -8 }}
+      animate={{ opacity: active ? 1 : 0, x: active ? 0 : -8 }}
+      transition={{ delay: index * 0.07, duration: 0.25 }}
+      className="flex items-start gap-2.5 text-xs font-mono"
+    >
+      <ChevronRight className="w-3 h-3 shrink-0 mt-0.5" style={{ color: 'var(--primaryGlow)' }} />
+      <span style={{ color: 'var(--textSecondary)' }}>{text}</span>
+    </motion.div>
+  );
+}
+
+// ── Experience card ────────────────────────────────────────────────────────
+function ExperienceCard({
+  exp, stageIndex, isLast, appeared,
+}: {
+  exp: typeof experiences[0];
+  stageIndex: number;
+  isLast: boolean;
+  appeared: boolean;
+}) {
+  const [expanded, setExpanded] = useState(stageIndex === 0); // first card open by default
+  const ref    = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: '-60px' });
+
+  const isWork    = exp.type !== 'education';
+  const stage     = isWork ? STAGE_COLORS[stageIndex % STAGE_COLORS.length] : null;
+  const stageName = isWork ? PIPELINE_STAGES[stageIndex % PIPELINE_STAGES.length] : 'SOURCE';
+  const stageColor= stage ?? { color: '#A89880', bg: 'rgba(168,152,128,0.08)', border: 'rgba(168,152,128,0.22)' };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 pt-10 pb-20">
-      <div className="text-center mb-16 space-y-4">
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 20 }}
+      transition={{ duration: 0.4, delay: stageIndex * 0.1 }}
+      className="relative"
+    >
+      {/* Connector line to next card */}
+      {!isLast && (
+        <div className="absolute left-[35px] sm:left-[43px] top-full w-px z-0" style={{ height: '40px' }}>
+          <DataFlowAnimation
+            direction="vertical"
+            length="40px"
+            color={stageIndex === 0 ? 'primary' : stageIndex === 1 ? 'secondary' : 'accent'}
+          />
+        </div>
+      )}
+
+      {/* Card */}
+      <div
+        className="relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300"
+        style={{
+          background:  'var(--surface)',
+          border:      `1px solid ${expanded ? stageColor.border : 'var(--borderSubtle)'}`,
+          boxShadow:   expanded ? `0 0 20px ${stageColor.color}18, 0 4px 24px rgba(0,0,0,0.15)` : 'none',
+        }}
+        onClick={() => setExpanded(p => !p)}
+      >
+        {/* Colored left accent bar */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl transition-all duration-300"
+          style={{ background: expanded ? stageColor.color : 'var(--borderSubtle)' }}
+        />
+
+        {/* Header row */}
+        <div className="flex items-start sm:items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 sm:pl-6">
+          {/* Stage dot */}
+          <div className="relative shrink-0 mt-1 sm:mt-0">
+            <div
+              className="w-10 h-10 rounded-xl flex items-center justify-center"
+              style={{ background: stageColor.bg, border: `1px solid ${stageColor.border}` }}
+            >
+              {isWork
+                ? <Terminal className="w-4 h-4" style={{ color: stageColor.color }} />
+                : <GraduationCap className="w-4 h-4" style={{ color: stageColor.color }} />
+              }
+            </div>
+            {/* Live pulse for active */}
+            {stageIndex === 0 && (
+              <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-statusSuccess border-2 flex items-center justify-center"
+                style={{ borderColor: 'var(--surface)' }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
+              </span>
+            )}
+          </div>
+
+          <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
+            {/* Title block */}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                <span
+                  className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full"
+                  style={{ color: stageColor.color, background: stageColor.bg, border: `1px solid ${stageColor.border}` }}
+                >
+                  {stageName}
+                </span>
+                {stageIndex === 0 && (
+                  <span className="text-[9px] font-mono text-statusSuccess flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
+                    RUNNING
+                  </span>
+                )}
+              </div>
+              <h3 className="font-mono font-bold text-sm leading-tight" style={{ color: 'var(--textPrimary)' }}>
+                {exp.role}
+              </h3>
+              <div className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--textSecondary)' }}>
+                {exp.company}
+              </div>
+            </div>
+
+            {/* Duration + chevron */}
+            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-1 shrink-0 w-full sm:w-auto mt-2 sm:mt-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0">
+              <div className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: 'var(--textTertiary)' }}>
+                <Clock className="w-3 h-3" />
+                {exp.duration}
+              </div>
+              <motion.div
+                animate={{ rotate: expanded ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronRight className="w-4 h-4" style={{ color: 'var(--textTertiary)' }} />
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        {/* Expanded log output */}
+        <AnimatePresence>
+          {expanded && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              {/* Terminal-style log area */}
+              <div
+                className="mx-4 mb-4 rounded-xl p-4 font-mono"
+                style={{
+                  background: 'rgba(0,0,0,0.30)',
+                  border: '1px solid var(--borderSubtle)',
+                }}
+              >
+                {/* Log header */}
+                <div className="flex items-center gap-2 mb-3 pb-2" style={{ borderBottom: '1px solid var(--borderSubtle)' }}>
+                  <div className="flex gap-1.5">
+                    <div className="w-2 h-2 rounded-full bg-red-500/60" />
+                    <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
+                    <div className="w-2 h-2 rounded-full bg-green-500/60" />
+                  </div>
+                  <span className="text-[9px] uppercase tracking-widest" style={{ color: 'var(--textTertiary)' }}>
+                    execution_log · {exp.company.split(' ')[0].toLowerCase()}.sh
+                  </span>
+                  {stageIndex === 0 && (
+                    <div className="ml-auto flex items-center gap-1 text-[9px] text-statusSuccess">
+                      <CheckCircle2 className="w-3 h-3" />
+                      in progress
+                    </div>
+                  )}
+                </div>
+
+                {/* Log lines */}
+                <div className="space-y-1.5">
+                  {exp.projects.map((bullet, i) => (
+                    <LogLine key={i} text={bullet} index={i} active={appeared} />
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
+
+// ── Page ──────────────────────────────────────────────────────────────────
+export default function ExperiencePage() {
+  const workExperiences = experiences.filter(e => e.type !== 'education');
+  const education       = experiences.find(e => e.type === 'education');
+  const headerRef = useRef<HTMLDivElement>(null);
+  const appeared  = useInView(headerRef, { once: true });
+
+  return (
+    <div className="max-w-3xl mx-auto px-6 pt-10 pb-20">
+
+      {/* ── Header ── */}
+      <div ref={headerRef} className="text-center mb-14 space-y-4">
+        <div
+          className="inline-flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest px-3 py-1.5 rounded-full"
+          style={{ color: 'var(--primaryGlow)', background: 'rgba(217,119,6,0.08)', border: '1px solid rgba(217,119,6,0.22)' }}
+        >
+          <Zap className="w-3 h-3" />
+          career_pipeline.yml · {workExperiences.length} runs · 0 errors
+        </div>
         <h1 className="text-4xl md:text-5xl font-bold font-heading">
-          Career <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">Timeline</span>
+          Professional{' '}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primaryGlow to-secondaryGlow">
+            Experience
+          </span>
         </h1>
-        <p className="text-textSecondary max-w-2xl mx-auto">
-          My professional journey mapped as a sequential execution pipeline.
+        <p className="text-textSecondary max-w-xl mx-auto text-sm md:text-base">
+          My track record of building data solutions, optimizing cloud infrastructure, and driving engineering excellence.
         </p>
       </div>
 
-      {/* Work Experience Timeline */}
-      <div className="relative pl-8 md:pl-0 mt-12 w-full">
-        <div className="hidden md:block absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[2px]">
-          <DataFlowAnimation direction="vertical" length="100%" color="primary" duration={3} />
+      {/* ── Pipeline run header bar ── */}
+      <div
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-2.5 rounded-xl mb-8 font-mono text-[10px] uppercase tracking-widest"
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--borderSubtle)',
+        }}
+      >
+        <div className="flex items-center gap-2" style={{ color: 'var(--textTertiary)' }}>
+          <div className="flex gap-1">
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+          </div>
+          <span>career_dag · vishal_prajapati</span>
         </div>
-        <div className="md:hidden absolute left-8 top-4 bottom-4 w-[2px] bg-white/5 rounded-full" />
-
-        <div className="flex flex-col gap-16 md:gap-24 relative z-10 w-full mt-8">
-          {workExperiences.map((exp, idx) => (
-            <div key={exp.id} className={`flex flex-col md:flex-row w-full items-center ${idx % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-              <div className={`w-full md:w-[45%] ${idx % 2 === 0 ? 'md:pl-10' : 'md:pr-10'} ml-10 md:ml-0 relative`}>
-                <div className="md:hidden absolute -left-[54px] top-6 z-20">
-                  <div className="w-5 h-5 rounded-full bg-surface border-[3px] border-primaryGlow shadow-neon-glow" />
-                </div>
-
-                <GlassCard className="p-6 relative overflow-hidden group hover:border-primaryGlow/50 transition-colors">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-primaryGlow/5 rounded-full blur-3xl -mr-10 -mt-10 group-hover:bg-primaryGlow/10 transition-colors" />
-
-                  <div className="flex items-center gap-3 text-primaryGlow mb-3 text-sm font-mono tracking-wider">
-                    <Calendar className="w-4 h-4" />
-                    {exp.duration}
-                  </div>
-
-                  <h3 className="text-2xl font-bold font-heading mb-1 text-white">{exp.role}</h3>
-                  <h4 className="text-base text-textSecondary border-b border-white/10 pb-4 mb-4 flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" /> {exp.company}
-                  </h4>
-
-                  <ul className="space-y-3">
-                    {exp.projects.map((desc, i) => (
-                      <li key={i} className="text-[15px] text-textPrimary/80 flex items-start gap-2.5">
-                        <Target className="w-4 h-4 text-accent mt-0.5 shrink-0" />
-                        <span className="leading-snug">{desc}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </GlassCard>
-              </div>
-
-              <div className="hidden md:flex w-[10%] justify-center relative z-20">
-                <div className="w-12 h-12 rounded-2xl bg-surface border-2 border-primaryGlow/50 shadow-neon-glow flex items-center justify-center p-2.5">
-                  <Code className="w-full h-full text-white/90" />
-                </div>
-              </div>
-
-              <div className="hidden md:block w-[45%]" />
-            </div>
-          ))}
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start pt-2 sm:pt-0 border-t border-white/5 sm:border-0" style={{ color: 'var(--textTertiary)' }}>
+          <span className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
+            <span style={{ color: 'var(--statusSuccess)' }}>RUNNING</span>
+          </span>
+          <span className="hidden sm:inline">·</span>
+          <span>{workExperiences.length} stages</span>
         </div>
       </div>
 
-      {/* Education — visually separated, lighter treatment */}
+      {/* ── Work experience cards ── */}
+      <div className="flex flex-col gap-10 relative">
+        {workExperiences.map((exp, i) => (
+          <ExperienceCard
+            key={exp.id}
+            exp={exp}
+            stageIndex={i}
+            isLast={i === workExperiences.length - 1}
+            appeared={appeared}
+          />
+        ))}
+      </div>
+
+      {/* ── Education ── */}
       {education && (
-        <div className="mt-20 pt-12 border-t border-white/5">
-          <div className="flex items-center gap-3 mb-8">
-            <GraduationCap className="w-5 h-5 text-textSecondary" />
-            <span className="text-sm font-mono uppercase tracking-widest text-textSecondary">Education</span>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.4 }}
+          className="mt-14 pt-10"
+          style={{ borderTop: '1px solid var(--borderSubtle)' }}
+        >
+          {/* Section label */}
+          <div className="flex items-center gap-2 mb-6">
+            <BookOpen className="w-4 h-4" style={{ color: 'var(--textTertiary)' }} />
+            <span className="text-[10px] font-mono uppercase tracking-widest" style={{ color: 'var(--textTertiary)' }}>
+              Source Layer · Education
+            </span>
+            <div className="flex-1 h-px" style={{ background: 'var(--borderSubtle)' }} />
           </div>
 
-          <div className="flex items-start gap-5 p-6 rounded-2xl border border-white/5 bg-surface/20">
-            <div className="w-11 h-11 rounded-xl bg-surface/60 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
-              <BookOpen className="w-5 h-5 text-textSecondary" />
-            </div>
-            <div className="flex-1">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-1">
-                <h3 className="text-lg font-bold font-heading text-white/80">{education.role}</h3>
-                <span className="text-xs font-mono text-textSecondary">{education.duration}</span>
+          {/* Education card — lighter treatment, SOURCE stage aesthetic */}
+          <div
+            className="relative rounded-2xl overflow-hidden"
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid rgba(168,152,128,0.22)',
+            }}
+          >
+            <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-2xl"
+              style={{ background: 'rgba(168,152,128,0.45)' }} />
+            <div className="px-5 py-5 pl-6 flex items-start gap-4">
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                style={{ background: 'rgba(168,152,128,0.10)', border: '1px solid rgba(168,152,128,0.22)' }}
+              >
+                <GraduationCap className="w-4 h-4" style={{ color: '#A89880' }} />
               </div>
-              <p className="text-sm text-textSecondary mb-3">{education.company}</p>
-              <ul className="space-y-1.5">
-                {education.projects.map((desc, i) => (
-                  <li key={i} className="text-sm text-textSecondary/70 flex items-start gap-2">
-                    <span className="text-textTertiary mt-0.5">–</span>
-                    {desc}
-                  </li>
-                ))}
-              </ul>
+              <div className="flex-1">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
+                  <div>
+                    <span
+                      className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full inline-block mb-1.5"
+                      style={{ color: '#A89880', background: 'rgba(168,152,128,0.10)', border: '1px solid rgba(168,152,128,0.22)' }}
+                    >
+                      SOURCE
+                    </span>
+                    <h3 className="font-mono font-bold text-sm" style={{ color: 'var(--textPrimary)' }}>
+                      {education.role}
+                    </h3>
+                    <p className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--textSecondary)' }}>
+                      {education.company}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[10px] font-mono w-full sm:w-auto mt-2 sm:mt-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0" style={{ color: 'var(--textTertiary)' }}>
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="w-3 h-3" />
+                      {education.duration}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-3 space-y-1.5">
+                  {education.projects.map((p, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs font-mono" style={{ color: 'var(--textSecondary)' }}>
+                      <span className="mt-0.5 shrink-0" style={{ color: 'var(--textTertiary)' }}>–</span>
+                      {p}
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
+
+      {/* ── Footer status ── */}
+      <div
+        className="mt-12 flex items-center justify-center gap-2 text-[10px] font-mono"
+        style={{ color: 'var(--textTertiary)' }}
+      >
+        <CheckCircle2 className="w-3.5 h-3.5 text-statusSuccess" />
+        <span>Completed {workExperiences.length} pipeline stages · 0 errors · 0 warnings</span>
+      </div>
     </div>
   );
 }

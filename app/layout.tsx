@@ -3,7 +3,7 @@ import { JetBrains_Mono, Syne, Inter } from "next/font/google";
 import { GlobalBackground } from "@/components/GlobalBackground";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CommandPalette } from "@/components/CommandPalette";
+import { CommandPaletteProvider } from "@/components/CommandPalette";
 import { PageTransition } from "@/components/PageTransition";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -24,6 +24,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(meta.siteUrl),
   title:       meta.title,
   description: meta.description,
   openGraph: {
@@ -44,15 +45,16 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark" data-theme="dark">
+    <html lang="en" className="dark" data-theme="terminal">
       <body className={`${inter.variable} ${syne.variable} ${jetBrainsMono.variable} antialiased bg-background text-textPrimary selection:bg-primaryGlow/30`}>
         <ThemeProvider>
           <GlobalBackground />
-          <CommandPalette />
-          <Navbar />
-          <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
-            <PageTransition>{children}</PageTransition>
-          </main>
+          <CommandPaletteProvider>
+            <Navbar />
+            <main className="relative z-10 w-full min-h-screen pt-24 pb-10">
+              <PageTransition>{children}</PageTransition>
+            </main>
+          </CommandPaletteProvider>
           <Footer />
           <ScrollToTop />
         </ThemeProvider>
