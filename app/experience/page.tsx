@@ -63,7 +63,7 @@ function ExperienceCard({
     >
       {/* Connector line to next card */}
       {!isLast && (
-        <div className="absolute left-[19px] top-full w-px z-0" style={{ height: '40px' }}>
+        <div className="absolute left-[35px] sm:left-[43px] top-full w-px z-0" style={{ height: '40px' }}>
           <DataFlowAnimation
             direction="vertical"
             length="40px"
@@ -89,9 +89,9 @@ function ExperienceCard({
         />
 
         {/* Header row */}
-        <div className="flex items-center gap-4 px-5 py-4 pl-6">
+        <div className="flex items-start sm:items-center gap-3 sm:gap-4 px-4 sm:px-5 py-4 sm:pl-6">
           {/* Stage dot */}
-          <div className="relative shrink-0">
+          <div className="relative shrink-0 mt-1 sm:mt-0">
             <div
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{ background: stageColor.bg, border: `1px solid ${stageColor.border}` }}
@@ -110,42 +110,44 @@ function ExperienceCard({
             )}
           </div>
 
-          {/* Title block */}
-          <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2 mb-0.5">
-              <span
-                className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full"
-                style={{ color: stageColor.color, background: stageColor.bg, border: `1px solid ${stageColor.border}` }}
-              >
-                {stageName}
-              </span>
-              {stageIndex === 0 && (
-                <span className="text-[9px] font-mono text-statusSuccess flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
-                  RUNNING
+          <div className="flex-1 flex flex-col sm:flex-row sm:items-center justify-between gap-3 min-w-0">
+            {/* Title block */}
+            <div className="min-w-0">
+              <div className="flex flex-wrap items-center gap-2 mb-0.5">
+                <span
+                  className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full"
+                  style={{ color: stageColor.color, background: stageColor.bg, border: `1px solid ${stageColor.border}` }}
+                >
+                  {stageName}
                 </span>
-              )}
+                {stageIndex === 0 && (
+                  <span className="text-[9px] font-mono text-statusSuccess flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
+                    RUNNING
+                  </span>
+                )}
+              </div>
+              <h3 className="font-mono font-bold text-sm leading-tight" style={{ color: 'var(--textPrimary)' }}>
+                {exp.role}
+              </h3>
+              <div className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--textSecondary)' }}>
+                {exp.company}
+              </div>
             </div>
-            <h3 className="font-mono font-bold text-sm leading-tight" style={{ color: 'var(--textPrimary)' }}>
-              {exp.role}
-            </h3>
-            <div className="text-[11px] font-mono mt-0.5" style={{ color: 'var(--textSecondary)' }}>
-              {exp.company}
-            </div>
-          </div>
 
-          {/* Duration + chevron */}
-          <div className="flex flex-col items-end gap-1 shrink-0">
-            <div className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: 'var(--textTertiary)' }}>
-              <Clock className="w-3 h-3" />
-              {exp.duration}
+            {/* Duration + chevron */}
+            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-1 shrink-0 w-full sm:w-auto mt-2 sm:mt-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0">
+              <div className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: 'var(--textTertiary)' }}>
+                <Clock className="w-3 h-3" />
+                {exp.duration}
+              </div>
+              <motion.div
+                animate={{ rotate: expanded ? 90 : 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <ChevronRight className="w-4 h-4" style={{ color: 'var(--textTertiary)' }} />
+              </motion.div>
             </div>
-            <motion.div
-              animate={{ rotate: expanded ? 90 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ChevronRight className="w-4 h-4" style={{ color: 'var(--textTertiary)' }} />
-            </motion.div>
           </div>
         </div>
 
@@ -232,7 +234,7 @@ export default function ExperiencePage() {
 
       {/* ── Pipeline run header bar ── */}
       <div
-        className="flex items-center justify-between px-4 py-2.5 rounded-xl mb-8 font-mono text-[10px] uppercase tracking-widest"
+        className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 px-4 py-2.5 rounded-xl mb-8 font-mono text-[10px] uppercase tracking-widest"
         style={{
           background: 'var(--surface)',
           border: '1px solid var(--borderSubtle)',
@@ -240,18 +242,18 @@ export default function ExperiencePage() {
       >
         <div className="flex items-center gap-2" style={{ color: 'var(--textTertiary)' }}>
           <div className="flex gap-1">
-            <div className="w-2 h-2 rounded-full bg-red-500/60" />
-            <div className="w-2 h-2 rounded-full bg-yellow-500/60" />
-            <div className="w-2 h-2 rounded-full bg-green-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
           </div>
           <span>career_dag · vishal_prajapati</span>
         </div>
-        <div className="flex items-center gap-3" style={{ color: 'var(--textTertiary)' }}>
+        <div className="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-start pt-2 sm:pt-0 border-t border-white/5 sm:border-0" style={{ color: 'var(--textTertiary)' }}>
           <span className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-statusSuccess animate-pulse" />
             <span style={{ color: 'var(--statusSuccess)' }}>RUNNING</span>
           </span>
-          <span>·</span>
+          <span className="hidden sm:inline">·</span>
           <span>{workExperiences.length} stages</span>
         </div>
       </div>
@@ -306,7 +308,7 @@ export default function ExperiencePage() {
                 <GraduationCap className="w-4 h-4" style={{ color: '#A89880' }} />
               </div>
               <div className="flex-1">
-                <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-1">
                   <div>
                     <span
                       className="text-[9px] font-mono uppercase tracking-widest px-2 py-0.5 rounded-full inline-block mb-1.5"
@@ -321,9 +323,11 @@ export default function ExperiencePage() {
                       {education.company}
                     </p>
                   </div>
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono" style={{ color: 'var(--textTertiary)' }}>
-                    <Clock className="w-3 h-3" />
-                    {education.duration}
+                  <div className="flex items-center justify-between sm:justify-start gap-1.5 text-[10px] font-mono w-full sm:w-auto mt-2 sm:mt-0 border-t border-white/5 sm:border-0 pt-2 sm:pt-0" style={{ color: 'var(--textTertiary)' }}>
+                    <div className="flex items-center gap-1.5">
+                      <Clock className="w-3 h-3" />
+                      {education.duration}
+                    </div>
                   </div>
                 </div>
                 <div className="mt-3 space-y-1.5">
