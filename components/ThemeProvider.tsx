@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'terminal' | 'dracula';
 
 interface ThemeContextValue {
   theme: Theme;
@@ -11,7 +11,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: 'dark',
+  theme: 'terminal',
   toggleTheme: () => {},
   setTheme: () => {},
 });
@@ -21,40 +21,31 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  // Default to dark; read from localStorage on mount to avoid flash
-  const [theme, setThemeState] = useState<Theme>('dark');
+  const [theme, setThemeState] = useState<Theme>('terminal');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // On mount: read saved preference, then system preference as fallback
-    const saved = localStorage.getItem('vp-theme') as Theme | null;
-    if (saved === 'light' || saved === 'dark') {
+    const saved = localStorage.getItem('vp-theme-v2') as Theme | null;
+    if (saved === 'terminal' || saved === 'dracula') {
       apply(saved);
     } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      apply(prefersDark ? 'dark' : 'light');
+      apply('terminal'); // default to ember terminal dark
     }
     setMounted(true);
   }, []);
 
   function apply(t: Theme) {
     document.documentElement.setAttribute('data-theme', t);
-    // Also keep the dark class in sync for Tailwind `dark:` variants
-    if (t === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('vp-theme', t);
+    document.documentElement.classList.add('dark'); // Always dark mode for tailwind utilities
+    localStorage.setItem('vp-theme-v2', t);
     setThemeState(t);
   }
 
-  const toggleTheme = () => apply(theme === 'dark' ? 'light' : 'dark');
+  const toggleTheme = () => apply(theme === 'terminal' ? 'dracula' : 'terminal');
   const setTheme = (t: Theme) => apply(t);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>
-      {/* Prevent flash of wrong theme — hide until mounted */}
       <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
         {children}
       </div>
